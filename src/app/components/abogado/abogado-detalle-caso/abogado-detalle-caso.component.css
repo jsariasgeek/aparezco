@@ -1,0 +1,79 @@
+.mis-casos{
+  /* background-color: #a8137b; */
+  color: white;
+  padding: 20px;
+  border-radius: 50px;
+
+}
+
+.text-casos{
+  color: white;
+}
+
+.btn-status
+{
+  text-align: center;
+}
+
+.datos-usuario{
+  background-color: #e2dcd3;
+
+  border-radius: 15px;
+  border: none;
+
+}
+
+.datos-usuario1{
+  background-color: #f3d9f7;
+  text-align: center;
+  border-radius: 15px;
+  border: none;
+  margin-right: 40px;
+  margin-left: 40px;
+  margin-top: 20px;
+
+}
+
+.btn-modificado{
+  color: #242e29;
+  font-weight: bolder;
+  border:none;
+
+}
+
+.nuevo-acordeon{
+  margin-left: 50px;
+  margin-right: 50px;
+  margin-top: 5px;
+  border-color: none;
+}
+
+.datos-perfil{
+   border-radius: 15px;
+   border: none;
+   background-color: #f7f3e2;
+   margin-top: 8px;
+   margin-left: 20px;
+   margin-right: 20px;
+   margin-bottom: 20px;
+}
+
+.datos-perfil1{
+  border-radius: 15px;
+  border: none;
+  background-color: #dddddd;
+  margin-top: 8px;
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+}
+
+.bg{
+   background-image: url(/assets/images/fondo.jpg);
+   height: 950px;
+   width: auto;
+}
+
+.breadcrumb-item::before{
+  color: white;
+}

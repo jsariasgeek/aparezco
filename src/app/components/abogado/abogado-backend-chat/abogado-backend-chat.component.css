@@ -1,0 +1,41 @@
+textarea{
+  resize: none;
+}
+
+.card{
+  border-radius: 20px;
+}
+
+/*.container-messages{
+  max-height: 100vh;
+  overflow: auto;
+}*/
+
+.burbuja-chat{
+  margin: 10px;
+
+}
+
+
+
+.bg {
+  background-image: url("/assets/images/fondo.jpg");
+
+  height: 950px;
+  width: auto;
+
+  background-position: center;
+  background-repeat: repeat;
+
+  background-attachment: fixed;
+}
+
+.btn-finish{
+  border-radius: 15px;
+  position: fixed;
+}
+
+.container-btn{
+  text-align: center;
+
+}

@@ -1,0 +1,90 @@
+
+textarea{
+  resize: none;
+}
+
+.card{
+  border-radius: 20px;
+
+
+}
+
+.star-filled{
+  width: 200%;
+}
+
+/*.container-messages{
+  max-height: 100vh;
+  overflow: auto;
+}*/
+
+.rating:focus{
+  outline: none;
+  border: 0;
+}
+
+star-rating:focus{
+  outline: none;
+  border: none;
+}
+
+.burbuja-chat{
+ margin-bottom: 15px;
+
+}
+
+
+
+.bg {
+  background-image: url("/assets/images/fondo.jpg");
+
+  height: 950px;
+  width: auto;
+  background-position: center;
+  background-repeat: repeat;
+  background-attachment: fixed;
+}
+
+.chat-corto{
+  width: 40%;
+}
+
+.card-qualification{
+  background-color: #efefef;
+  border: none;
+  border-radius: 40px;
+  margin: 40px;
+  box-shadow: 0px 0px 15px #cbcbcb;
+}
+
+.text-qualification{
+  font-size: 25px;
+}
+
+.card-interna{
+  border-radius: 13px;
+  height: 200px;
+  border: none;
+
+}
+
+.card-mensaje{
+  /* background-color: #018685; */
+  background-image: url(/assets/images/fondocalificacion.jpg);
+  border: none;
+  margin: 30px;
+  box-shadow: 0px 0px 15px gray;
+
+}
+
+.unupa-abogado{
+  margin-top: -140px;
+}
+
+.btn-inicio{
+  background-color: #ff9800;
+  border-radius: 15px;
+  border: none;
+  padding: 10px;
+  color: white;
+}

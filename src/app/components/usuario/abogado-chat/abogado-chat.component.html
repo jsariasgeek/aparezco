@@ -1,0 +1,143 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<div class="bg">
+  <br>
+  <div class="container ">
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="row " #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <span  *ngFor="let message of messages" [ngStyle]="{textAlign:message.user == request.email ? 'right':'left'
+        , position:message.user == request.email ? 'right':'left'}">
+            <div class="card burbuja-chat" >
+                <div class="card-body" >
+                  <h6 class="card-subtitle mb-2 text-muted">{{message.user == request.email ? 'Tu':lawyerName}}</h6>
+                  <p class="card-text">{{message.text}}</p>
+                  <footer class="blockquote-footer">{{message.id | date:'shortTime' }}</footer>
+                </div>
+              </div>
+        </span>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+
+<!--
+    <div class="row" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="card burbuja-chat" *ngFor="let message of messages">
+          <div class="card-body" [ngStyle]="{textAlign:message.user == request.email ? 'right':'left'}">
+            <h6 class="card-subtitle mb-2 text-muted">{{message.user == request.email ? 'Tu':lawyerName}}</h6>
+            <p class="card-text">{{message.text}}</p>
+            <footer class="blockquote-footer">{{message.id | date:'shortTime' }}</footer>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+ -->
+
+    <div class="row" id="rating" *ngIf="showSurvey">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="card card-qualification w3-center w3-animate-zoom">
+          <div class="card-body text-center">
+            ¿Como Calificas la Atención de <strong class="text-qualification"> {{lawyerName}}</strong>?
+            <br>
+
+            <br>
+            <star-rating [starType]="'svg'" [size]="large" (starClickChange)="ratingClick($event)"></star-rating>
+            <p>{{lawyerRating}}</p>
+            <div class="accordion" id="accordionExample">
+              <div>
+                <div id="headingOne">
+                  <h5 class="mb-0">
+                    <button class="btn btn-link" type="button"
+                            data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne" (click)="inputComment()">
+                      ¿Deseas Agregar algún comentario?
+                    </button>
+                  </h5>
+                </div>
+
+                <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+                  <div class="card-body ">
+                    <form #comment="ngForm">
+                      <textarea class="form-control card-interna" rows="3"
+                                value=""
+                                required minlength="10" name="caso" #caso [(ngModel)]="commentLawyer">
+                    </textarea>
+                    </form>
+                  </div>
+                </div>
+                <br>
+                <button type="button" class="btn btn-primary theme-pastel" (click)="sendRating(comment)" [disabled]="lawyerRating<1">Enviar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+    <br><br><br>
+
+    <div class="row " *ngIf="ratingSent">
+      <div class="col-md-3"></div>
+      <div class="col-md-6">
+        <div class="card card-mensaje w3-center w3-animate-opacity">
+          <div class="card-body text-center ">
+            <div> <img src="/assets/images/unupa-abogado.png" alt="" class="img-fluid unupa-abogado"> </div>
+            <div class="card-title" style="color:white;">
+              ¡Gracias por Tus Comentarios!, En la bandeja de entrada de tu correo encontraras las instrucciones para hacerle seguimiento a tu caso.
+            </div>
+            <div class="card-subtitle" style="color:white;">
+            <strong>TU CASO QUEDA EN BUENAS MANOS</strong>
+            <br>
+            <br>
+            <button type="button" class="btn btn-warning tomar-caso" routerLink="">Finalizar</button>
+            </div>
+            <br>
+            <!-- <div><button class="btn-inicio">TERMINA TU REGISTRO</button></div> -->
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3"></div>
+    </div>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+
+  </div>
+</div>
+
+
+
+<nav class="navbar fixed-bottom navbar-light bg-light">
+  <div class="col-md-3"></div>
+  <div class="col-md-5">
+    <form (ngSubmit)="sendMessage(f)" #f="ngForm">
+      <textarea rows="3" class="form-control" required name="text" (keyup.enter)="sendMessage(f)" #text ngModel></textarea>
+    </form>
+  </div>
+  <div class="col-md-1">
+    <button class="btn theme-pastel" [disabled]="!f.valid || ratingSent" type="button" (click)="sendMessage(f)">Enviar</button>
+  </div>
+  <div class="col-md-3"></div>
+</nav>
+
+
+<script>
+  $('#collapseOne').on('shown.bs.collapse', ()=>{
+    console.log('Activé el accordeón');
+  })
+</script>

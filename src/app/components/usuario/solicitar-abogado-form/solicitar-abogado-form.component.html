@@ -1,0 +1,99 @@
+<br>
+
+
+<div class="row bg">
+  <div class="col-md-6 col-sm-12 col-12 text-center" >
+    <div class="container ">
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+
+      <form (ngSubmit)="sendRequest(f)" #f="ngForm" style="margin: 30px" class="form-n bg-formabogado">
+
+        <img src="assets/images/logo.png" alt="logo Aparezcp" class="img-fluid logo"> <br><br>
+
+        <h2 class="text-center"> <strong>La Solución a tu problema inicia ahora</strong> </h2>
+      <p class="text-center">¡Haz las consultas legales que necesites sin pagar! <br>
+        </p>
+
+        <div class="form-group" >
+          <input type="text" class="form-control" placeholder="Ingresa tu Nombre" required name="name" minlength="10" #name ngModel>
+          <small class="form-text text-muted" *ngIf="!name.valid && name.touched">  Ingresa tu Nombre Completo <i class="fa fa-user-circle"></i></small>
+        </div>
+        <div class="form-group" >
+          <input type="email" class="form-control" placeholder="Ingresa tu Email" name="email" required #email ngModel>
+          <small class="form-text text-muted" *ngIf="!email.valid && email.touched">Ingresa tu Email</small>
+        </div>
+        <div class="input-group-prepend form-group">
+
+          <input class="form-control" placeholder="Celular" required minlength="10"  name="celular" #celular ngModel>
+          <small class="form-text text-muted" *ngIf="!celular.valid && celular.touched">Ingresa un Número de Celular Válido</small>
+        </div>
+        <!-- <div class="input-group-prepend form-group">
+            <select class="form-control" id="exampleFormControlSelect1" placeholder="Selecciona tu Ciudad">
+                <option>Selecciona tu Ciudad</option>
+                <br>
+                <option>Pereira</option>
+                <option>Armenia</option>
+                <option>Manizales</option>
+                <option>Me encuentro en otra ciudad</option>
+              </select>
+            <small class="form-text text-muted" *ngIf="!celular.valid && celular.touched">Ingresa un Número de Celular Válido</small>
+          </div> -->
+        <br>
+        <div class="form-group">
+          <textarea class="form-control" rows="3" placeholder="Descríbenos brevemente tu Problema" required minlength="20" name="caso" #caso ngModel></textarea>
+          <small *ngIf="caso.touched && caso.value.lenght<15">Ingresa una descripción para tu caso</small>
+        </div>
+        <br>
+        <div class="form-group form-check">
+          <input type="checkbox" class="form-check-input" id="exampleCheck1" #checkTerms (change)="checkboxActive($event)" >
+          <label class="form-check-label" for="exampleCheck1">Acepto los Términos y Condiciones</label>
+        </div>
+        <button type="submit" class="btn-new" [disabled]="(!f.valid) || (!checkTerms.checked)" style=" padding: 12px; border-radius: 15px"><strong>Contactar a mi abogado</strong></button>
+
+
+
+      </form>
+      <br><br>
+    </div>
+  </div>
+  <div   class="col-md-6 d-none d-md-block">
+      <div class='slide1'></div>
+      <div class='slide2'></div>
+      <div class='slide3'></div>
+
+
+  </div>
+
+  <!-- <div   class="col-md-6 d-none d-md-block background-nena">
+
+    </div> -->
+
+
+
+
+
+
+</div>
+
+<div class="row footer-aparezco col-md-12">
+
+    <footer style="margin: auto;">
+
+        <!-- Copyright -->
+        <div class="footer-copyright py-3">© 2018 Copyright:
+          <a href="https://mdbootstrap.com/bootstrap-tutorial/" style="color:white">  <strong>Aparezco </strong> </a>  &nbsp;
+          <i class="fab fa-facebook-f"></i>   &nbsp; <i class="fab fa-instagram"></i>  &nbsp;
+           |  &nbsp; Powered <a href="http://xerogroup.co/" style="color:white" target="_blank"> <strong>XeroGroup</strong> </a>
+
+
+        </div>
+        <!-- Copyright -->
+
+      </footer>
+</div>
+

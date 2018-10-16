@@ -1,0 +1,105 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Vamos muy Bien!  Continúa tu proceso de Registro!</h3>
+      <br>
+      <span class="accordion" id="accordionExample" style="margin-bottom: 10px;">
+        <span id="headingOne">
+          <button class="btn theme-pastel btn-block" type="button" data-toggle="collapse"
+                  data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Deseo Registrarme Con mi Email</button>
+        </span>
+      <span id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <br>
+        <p>Ya sabemos que tu correo es: {{request.email}} <br>
+        Ahora crea una contraseña que puedas recordar fácilmente!</p>
+        <form #f="ngForm" (ngSubmit)="register(f)" >
+        <br>
+      <div class="form-group">
+      <input type="password" class="form-control" placeholder="Crea tu Contraseña"
+             minlength="6" required #pass="ngModel" ngModel name="pass">
+      <span *ngIf="!pass.valid && pass.touched">
+      <small id="passwordHelpInline" class="text-muted" *ngIf="pass.errors.minlength">
+      La Contraseña debe de contener como mínimo 6 caracteres
+      </small>
+      </span>
+      </div>
+      <div class="form-group">
+      <input type="password" class="form-control" placeholder="Confirma tu Contraseña"
+             required #passConf ngModel name="passConf">
+      <small *ngIf="pass.touched && pass.value!=passConf.value" class="text-muted">
+      Las contraseñas deben ser iguales
+      </small>
+
+      </div>
+
+      <button type="submit" class="btn theme-pastel" [disabled]="f.invalid || pass.value!=passConf.value">Registrarme</button>
+        <br>
+        <br>
+      </form>
+      </span>
+      </span>
+
+      <button class="btn btn-block" style="margin-top: 8px;" (click)="userFacebookLogin()">
+        <i class="fab fa-facebook-f"></i> &nbsp;Deseo Iniciar Sesión con Facebook</button>
+      <button class="btn btn-block"><i class="fab fa-google"></i> Deseo Iniciar Sesión con Gmail</button>
+
+      <!--<p>Ya sabemos que tu correo es: {{request.email}}</p>-->
+      <!--<p>Ahora crea una contraseña que puedas recordar fácilmente!</p>-->
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+
+  <!--<div class="row">-->
+    <!--<div class="col-md-6">-->
+        <!--<form #f="ngForm" (ngSubmit)="register(f)">-->
+          <!--<div class="form-group">-->
+            <!--<input type="password" class="form-control" placeholder="Crea tu Contraseña"-->
+                   <!--minlength="6" required #pass="ngModel" ngModel name="pass">-->
+            <!--<span *ngIf="!pass.valid && pass.touched">-->
+              <!--<small id="passwordHelpInline" class="text-muted" *ngIf="pass.errors.minlength">-->
+              <!--La Contraseña debe de contener como mínimo 6 caracteres-->
+            <!--</small>-->
+            <!--</span>-->
+          <!--</div>-->
+          <!--<div class="form-group">-->
+            <!--<input type="password" class="form-control" placeholder="Confirma tu Contraseña"-->
+                   <!--required #passConf ngModel name="passConf">-->
+            <!--<small *ngIf="pass.touched && pass.value!=passConf.value" class="text-muted">-->
+              <!--Las contraseñas deben ser iguales-->
+            <!--</small>-->
+
+          <!--</div>-->
+
+          <!--<button type="submit" class="btn theme-pastel" [disabled]="!f.valid || pass.value!=passConf.value">Registrarme</button>-->
+
+        <!--</form>-->
+    <!--</div>-->
+    <!--<div class="col-md-6"></div>-->
+  <!--</div>-->
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-6">
+      <div class="alert alert-danger" role="alert" *ngIf="userRegistered">
+        Al parecer ya te has registrado previamente, <a routerLink="/usuario/login">Inicia Sesión</a>
+      </div>
+    </div>
+    <div class="col-md-6"></div>
+  </div>
+
+
+
+
+
+</div>

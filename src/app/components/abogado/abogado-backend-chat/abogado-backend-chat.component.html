@@ -1,0 +1,62 @@
+<div class="bg">
+  <br>
+  <br>
+  <br>
+  <br>
+<div class="container">
+
+  <div class="row sticky-top" style="top: 40px;">
+    <div class="col-md-3"></div>
+    <div class="col-md-6 container-btn">
+      <div >
+        <div>
+
+
+          <div class="btn-finish">
+              <button type="button" class="btn btn-danger"><a  (click)="endChat()">Finalizar Chat y Enviar Encuesta</a></button>
+          </div>
+
+
+
+
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+  <br><br>
+
+  <div class="row" #scrollMe [scrollTop]="scrollMe.scrollHeight">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <div class="card burbuja-chat" *ngFor="let message of messages">
+        <div class="card-body" [ngStyle]="{textAlign:message.user == request.email ? 'left':'right'}">
+          <h6 class="card-subtitle mb-2 text-muted">{{message.user == request.email ? request.name:'Tu'}}</h6>
+          <p class="card-text">{{message.text}}</p>
+          <footer class="blockquote-footer">{{message.id | date:'shortTime' }}</footer>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3"></div>
+  </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<nav class="navbar fixed-bottom navbar-light bg-light">
+  <div class="col-md-3"></div>
+  <div class="col-md-5">
+    <form (ngSubmit)="sendMessage(f)" #f="ngForm">
+      <textarea rows="3" class="form-control" required name="text" (keyup.enter)="sendMessage(f)" #text ngModel></textarea>
+    </form>
+  </div>
+  <div class="col-md-1">
+    <button class="btn theme-pastel" [disabled]="!f.valid" (click)="sendMessage(f)">Enviar</button>
+  </div>
+  <div class="col-md-3"></div>
+</nav>
+</div>

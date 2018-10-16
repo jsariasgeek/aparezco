@@ -1,0 +1,148 @@
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin: 0;
+}
+
+input[type=number]{
+  -moz-appearance: textfield;
+
+}
+
+.form-control{
+  margin-bottom: -12px;
+  padding: 15px;
+  background-color: #f1f2f2;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched{
+  border: 1px solid red;
+}
+
+body{
+  font-family: 'Open Sans', sans-serif;
+}
+
+app-solicitar-abogado-form{
+  background-color: #cb0072;
+}
+
+.form-group > input,
+ .form-group > textarea,
+ .form-group > select {
+  background-color:#fceeff;
+  border: #d956f7;
+}
+
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+
+
+/* Large devices (large desktops, 1200px and up) */
+/* @media (min-width: 768px) {
+  .background-nena{
+    background-image: url('/assets/images/lawyer-md.png');
+    background-position: left;
+
+    background-size: cover;
+    background-repeat: no-repeat;
+
+  }
+} */
+
+.footer-aparezco{
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color:#373a44;
+  border-top: 3px solid #fdb153;
+  color: white;
+}
+
+
+.bg{
+  background-image: url('/assets/images/bg_encontrar.jpg');
+  height: 950px;
+  width: 100%;
+
+}
+
+.bg-formabogado{
+  background-color: white;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px #dfdddd;
+
+}
+
+.logo{
+  margin-top: -100px;
+}
+
+.btn-new{
+
+  border: none;
+}
+
+/* prueba */
+
+.slider {
+  max-width: 300px;
+  height: 200px;
+  margin: 20px auto;
+  position: left;
+}
+.slide1,.slide2,.slide3,.slide4,.slide5 {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+.slide1 {
+  background: url(/assets/images/lawyer-md.jpg)no-repeat center;
+      background-size: cover;
+    animation:fade 35s infinite;
+-webkit-animation:fade 35s infinite;
+background-position: left;
+
+
+}
+.slide2 {
+  background: url(/assets/images/lawyer-md2.jpg)no-repeat center;
+      background-size: cover;
+    animation:fade2 35s infinite;
+-webkit-animation:fade2 35s infinite;
+background-position: left;
+}
+.slide3 {
+    background: url(/assets/images/lawyer-md3.jpg)no-repeat center;
+      background-size: cover;
+    animation:fade3 35s infinite;
+-webkit-animation:fade3 35s infinite;
+background-position: left;
+}
+@keyframes fade
+{
+  0%   {opacity:1}
+  33.333% { opacity: 0}
+  66.666% { opacity: 0}
+  100% { opacity: 1}
+}
+@keyframes fade2
+{
+  0%   {opacity:0}
+  33.333% { opacity: 1}
+  66.666% { opacity: 0 }
+  100% { opacity: 0}
+}
+@keyframes fade3
+{
+  0%   {opacity:0}
+  33.333% { opacity: 0}
+  66.666% { opacity: 1}
+  100% { opacity: 0}
+}

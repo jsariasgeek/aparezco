@@ -1,0 +1,62 @@
+.mis-casos{
+  background-color: #a8137b;
+  color: white;
+  padding: 20px;
+  border-radius: 50px;
+
+}
+
+.text-casos{
+  color: white;
+}
+
+.bg{
+  background-image: url(/assets/images/fondo.jpg);
+  height: 950px;
+  width: auto;
+}
+
+.btn-crear-actividad{
+  background-color: #ff9800;
+  border: #ff9800;
+  padding: 10px;
+  border-radius: 15px;
+}
+
+.background-card{
+  margin-top: 20px;
+  border: none;
+
+
+
+}
+
+.background-cardb{
+  background: #ED4264;  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #FFEDBC, #ED4264);  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #FFEDBC, #ED4264); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+  border: none;
+  box-shadow: 0 0 15px #dedede;
+  padding:3px;
+  border-radius: 10px 10px 0 0;
+
+}
+
+.background-cardc{
+  background-color: #e5e5e5;
+  border-radius: 0 0 15px 15px;
+
+}
+
+.text-casosb{
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+
+}
+
+.card-x{
+  margin-bottom: 20px;
+}

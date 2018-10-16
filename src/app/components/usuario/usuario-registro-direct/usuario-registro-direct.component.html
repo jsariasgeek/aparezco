@@ -1,0 +1,90 @@
+<div class="bg">
+    <br>
+    <br>
+    <br>
+    <br>
+    
+    
+    <div class="container container-abogado">
+    
+    
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="text-center">Regístrate</h3>
+        </div>
+      </div>
+    
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          
+          <h4 class="text-center">Ingresa con tus Redes</h4>
+          <button class="btn btn-lg btn-block" style="background-color: #3b5998; color: white; border-radius: 15px;" (click)="userFacebookLogin()">
+              <i class="fab fa-facebook-f"></i> Iniciar Sesión con Facebook</button>
+            <button class="btn btn-lg btn-block"  style="background-color:#ec341e; color: white; border-radius: 15px;"><i class="fab fa-google"></i> Iniciar Sesión con Gmail</button>
+            <br>
+          <hr>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <h4 class="text-center">Con tu Email</h4>
+          <form  (ngSubmit)="register(f)" #f="ngForm">
+            <div class="form-group espacio">
+              <label for="exampleInputEmail1" >Nombre Completo</label>
+              <input type="text" class="form-control datos"
+                     id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Tu Nombre Completo"
+              #name ngModel name="name" required>
+              <!--<small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>-->
+            </div>
+            <div class="form-group espacio">
+              <label for="email">Tu Email</label>
+              <input type="email" class="form-control datos" id="email" placeholder="Tu Email" #email ngModel
+              name="email" required>
+            </div>
+            <div class="form-group espacio">
+              <label for="exampleInputPassword1">Crea una Contraseña</label>
+              <input type="password" class="form-control datos" id="exampleInputPassword1"
+                     placeholder="Password" #pass ngModel name="pass" required>
+            </div>
+            <div class="form-group espacio">
+              <label for="exampleInputPassword2">Confirma tu Contraseña</label>
+              <input type="password" class="form-control datos" id="exampleInputPassword2" placeholder="Password"
+              #pass2 ngModel name="pass2" required>
+            </div>
+            <!--<div class="form-group form-check">-->
+              <!--<input type="checkbox" class="form-check-input" id="exampleCheck1">-->
+              <!--<label class="form-check-label" for="exampleCheck1">Check me out</label>-->
+            <!--</div>-->
+
+            
+            <div style="text-align:center">
+                <button type="submit" class="btn theme-pastel" [disabled]="f.invalid || pass.value!=pass2.value">Registrarme</button>
+
+            </div>
+          </form>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    
+      <br>
+    
+      <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+          <div class="alert alert-danger" role="alert" *ngIf="userRegistered">
+            Al parecer ya te has registrado previamente, <a routerLink="/usuario/login">Inicia Sesión</a>
+          </div>
+        </div>
+        <div class="col-md-3"></div>
+      </div>
+    
+    
+    
+    
+    </div>
+    
+</div>

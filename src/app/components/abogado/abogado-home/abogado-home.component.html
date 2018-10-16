@@ -1,0 +1,78 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="col-md-8">
+        <h3 class="tittle-admin"> <strong>PANEL DE ADMINISTRACIÓN ABOGADOS</strong> </h3>
+    </div>
+    <div class="col-md-4">
+      <form>
+        <div class="form-group" ngbDropdown #myDrop="ngbDropdown">
+          <input type="text" class="form-control" placeholder="Buscar Caso"
+          (keyup)="myDrop.open()" id="dropdownManual" ngbDropdownAnchor
+          autocomplete="off">
+          <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;">
+              <button class="dropdown-item">Action - 1</button>
+              <button class="dropdown-item">Another Action</button>
+              <button class="dropdown-item">Something else is here</button>
+            </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<div class="container">
+
+  <div class="row">
+
+    <div class="col-md-12">
+        <div></div>
+        <br>
+        <ul class="nav nav-pills mb-3" id="pills-tab">
+            <li class="nav-item" >
+              <a class="nav-link entrante" id="pills-home-tab"
+              data-toggle="pill" role="tab"
+               aria-selected="true" routerLink="listarcasos/waitingLawyer" routerLinkActive="active">Solicitudes Entrantes</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link abierta" id="pills-abiertos-tab"
+                data-toggle="pill"  role="tab"
+                aria-selected="false"  routerLink="listarcasos/assignedOpen" routerLinkActive="active">Casos Abiertos</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link proceso" id="pills-profile-tab"
+              data-toggle="pill"  role="tab"
+              aria-selected="false"  routerLink="listarcasos/assignedWorking" routerLinkActive="active">Casos en Proceso</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link finalizado" id="pills-contact-tab"
+              data-toggle="pill"  role="tab"
+              aria-selected="false"  routerLink="listarcasos/finished" routerLinkActive="active">Casos Finalizados</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link no-prospectados" id="pills-contact-tab"
+                data-toggle="pill"  role="tab"
+                aria-selected="false" routerLink="listarcasos/canceled" routerLinkActive="active">
+                Casos no Prospectados</a>
+             </li>
+          </ul>
+          <div id="pills-tabContent">
+              <router-outlet></router-outlet>
+    </div>
+  </div>
+
+
+</div>
+
+
+
+
+
+</div>

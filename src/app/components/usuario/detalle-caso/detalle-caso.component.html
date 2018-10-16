@@ -1,0 +1,81 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-12">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="/usuario/home">Mis Casos</a></li>
+          <li class="breadcrumb-item active" aria-current="page">{{request.id}}</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+
+
+  <div class="row">
+    <div class="col-md-12">
+      <h3>{{request.categoryByLawyer || 'Sin Categoría'}}</h3>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <h4>Actividades del Caso</h4>
+    </div>
+  </div>
+
+  <br>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="list-group">
+        <a class="list-group-item list-group-item-action flex-column align-items-start"
+        style="border-radius: 10px" *ngFor="let activity of activities">
+          <div class="d-flex w-100 justify-content-between">
+            <h5 class="mb-1" style="font-weight: bold">{{activity.title}}</h5>
+            <!--<small>3 days ago</small>-->
+          </div>
+            <p class="mb-1">
+              {{activity.content}}
+            </p>
+          <small>{{activity.id | date}}</small>
+            <!--<small>Donec id elit non mi porta.</small>-->
+        </a>
+        <br>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <div class="accordion" id="accordionExample">
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h5 class="mb-0">
+              <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseChat" aria-expanded="true" aria-controls="collapseOne">
+                Ver Chat
+              </button>
+            </h5>
+          </div>
+
+          <div id="collapseChat" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+              <ul class="list-group">
+                <li class="list-group-item" *ngFor="let message of messages">{{message.text}}</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+</div>

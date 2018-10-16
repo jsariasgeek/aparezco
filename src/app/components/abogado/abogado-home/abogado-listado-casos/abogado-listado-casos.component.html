@@ -1,0 +1,54 @@
+<div id="pills-home" role="tabpanel"
+aria-labelledby="pills-home-tab" *ngIf="status == 'waitingLawyer' && incomingRequests?.length>=1">
+
+    <div class="card-body card-a" *ngFor="let request of incomingRequests">
+      <a (click)="goToChat(request.id)" style="text-decoration: none; color: inherit;">
+      <h5 class="card-title"><strong>{{request.name | titlecase }}</strong></h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{request.id | date:'long' }}</h6>
+      <p class="card-text" style="font-style:oblique; color: #6e6c6d">{{request.caso}}</p>
+      <div (click)="goToChat(request.id)">
+        <button type="button" class="btn btn-warning tomar-caso">Tomar Caso</button>
+      </div>
+
+  </a>
+</div>
+    <span>
+      <div class="card-body" *ngIf="incomingRequests?.length<1">
+        <h5 class="card-title">No hay solicitudes Entrantes</h5>
+      </div>
+    </span>
+    <nav aria-label="..." *ngIf="incomingRequests?.length>=1">
+      <ul class="pagination">
+        <li class="page-item" [ngClass]="{'disabled':!prevKey || prevKey==0}">
+          <a class="page-link" (click)="prevPage()">Anterior</a>
+        </li>
+        <li class="page-item" [ngClass]="{'disabled':!nextKeyBool}">
+          <a class="page-link" (click)="nextPage()">Siguiente</a>
+        </li>
+      </ul>
+    </nav>
+
+</div>
+
+<span *ngIf="status!=='waitingLawyer'">
+    <div class="card-body card-a" *ngFor="let request of filtered">
+        <a routerLink="/abogado/casos/{{request.id}}" style="text-decoration: none; color: inherit;">
+        <h5 class="card-title"><strong>{{request.name | titlecase }}</strong></h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{request.id | date:'long' }}</h6>
+        <h6 class="card-subtitle mb-2 text-muted">{{ request.id }}</h6>
+        <p class="card-text" style="font-style:oblique; color: #6e6c6d">{{request.caso}}</p>
+
+    </a>
+  </div>
+</span>
+<nav aria-label="..." *ngIf="filtered?.length>=1 && status!=='waitingLawyer'">
+<ul class="pagination">
+  <li class="page-item" [ngClass]="{'disabled': prevKeysCases.length<=1}">
+    <a class="page-link" (click)="prevPageCases()">Anterior</a>
+  </li>
+  <li class="page-item" [ngClass]="{'disabled':!thereIsMoreCases}">
+    <a class="page-link" (click)="nextPageCases()">Siguiente</a>
+  </li>
+</ul>
+</nav>
+

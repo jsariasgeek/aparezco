@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~css-star-rating/css/star-rating.css';
+
+html:root{
+  font-family: 'Open Sans', sans-serif;
+}
+
+html, body{
+  font-family: 'Open Sans', sans-serif;
+}
+
+/*Aplica background con el color corporativo*/
+.theme-pastel{
+  background-color:  #be165a;
+  color: white;
+
+}
+
+.logo{
+  max-width: 30%;
+}
+
+/*.btn-primary{*/
+  /*background-color: #be165a;*/
+/*}*/
+
+.finished{
+  background-color: #f2a50c;
+}
+
+.assigned{
+  background-color:#3bc408;
+}
+
+.canceled{
+  background-color:#f20c0c;
+}
+
