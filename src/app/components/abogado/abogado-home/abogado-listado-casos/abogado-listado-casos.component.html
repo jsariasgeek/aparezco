@@ -12,11 +12,7 @@ aria-labelledby="pills-home-tab" *ngIf="status == 'waitingLawyer' && incomingReq
 
   </a>
 </div>
-    <span>
-      <div class="card-body" *ngIf="incomingRequests?.length<1">
-        <h5 class="card-title">No hay solicitudes Entrantes</h5>
-      </div>
-    </span>
+
     <nav aria-label="..." *ngIf="incomingRequests?.length>=1">
       <ul class="pagination">
         <li class="page-item" [ngClass]="{'disabled':!prevKey || prevKey==0}">
@@ -30,6 +26,12 @@ aria-labelledby="pills-home-tab" *ngIf="status == 'waitingLawyer' && incomingReq
 
 </div>
 
+<span *ngIf="status == 'waitingLawyer'">
+    <div class="card-body" *ngIf="!incomingRequests || incomingRequests?.length==0">
+      <h5 class="card-title">No hay solicitudes Entrantes</h5>
+    </div>
+  </span>
+
 <span *ngIf="status!=='waitingLawyer'">
     <div class="card-body card-a" *ngFor="let request of filtered">
         <a routerLink="/abogado/casos/{{request.id}}" style="text-decoration: none; color: inherit;">
@@ -41,6 +43,11 @@ aria-labelledby="pills-home-tab" *ngIf="status == 'waitingLawyer' && incomingReq
     </a>
   </div>
 </span>
+<span *ngIf="status!='waitingLawyer'">
+    <div class="card-body" *ngIf="filtered?.length<1">
+      <h5 class="card-title">No hay Casos {{statusCases[status]}}</h5>
+    </div>
+  </span>
 <nav aria-label="..." *ngIf="filtered?.length>=1 && status!=='waitingLawyer'">
 <ul class="pagination">
   <li class="page-item" [ngClass]="{'disabled': prevKeysCases.length<=1}">

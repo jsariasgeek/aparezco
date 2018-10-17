@@ -19,6 +19,13 @@ export class AbogadoListadoCasosComponent implements OnInit {
 
   status;
 
+  statusCases = {
+    'canceled':'Cancelados',
+    'finished':'Finalizados',
+    'assignedWorking':'En Proceso',
+    'assignedOpen':'Abiertos'
+  }
+
   //lawyer
   lawyer;
 
@@ -88,7 +95,8 @@ export class AbogadoListadoCasosComponent implements OnInit {
   getIncomingRequests(key?) {
     this.reqService.getIncomingRequests(this.offset, key).subscribe(
       (incomingRequests)=>{
-        // console.log('incomingRequests', incomingRequests);
+        console.log('incomingRequests', incomingRequests);
+        console.log(incomingRequests.length);
         this.incomingRequests = incomingRequests;
         // this.incomingRequests = _.slice(incomingRequests, 0, this.offset)
         if(incomingRequests.length>=1){

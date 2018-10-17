@@ -47,6 +47,7 @@ import {ResaltarStatusDirective} from "./directives/resaltar-status.directive";
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import { AbogadoListadoCasosComponent } from './components/abogado/abogado-home/abogado-listado-casos/abogado-listado-casos.component';
 import { NgbDropdownModule, NgbModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { AbogadoRootComponent } from './components/abogado/abogado-root/abogado-root.component';
 
 
 
@@ -61,6 +62,8 @@ const appRoutes:Routes = [
   {path:'abogado', component:AbogadoHomeComponent, canActivate:[MyGuardService],
   children:[
     {path:'listarcasos/:status', component:AbogadoListadoCasosComponent, canActivate:[MyGuardService]},
+    {path:'casos/:id', component:AbogadoDetalleCasoComponent, canActivate:[MyGuardService]},
+    {path:'casos/:id/actividades', component:AbogadoActividadesComponent, canActivate:[MyGuardService]},
   ]
 },
   {path:'abogado/casos/:id', component:AbogadoDetalleCasoComponent, canActivate:[MyGuardService]},
@@ -110,6 +113,7 @@ const appRoutes:Routes = [
     TruncatePipe,
     ResaltarStatusDirective,
     AbogadoListadoCasosComponent,
+    AbogadoRootComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,54 +1,12 @@
-<div class="bg">
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <div class="container ">
-
-    <div class="row ">
-      <div class="col-md-12 " >
-        <nav aria-label="breadcrumb" >
+<div class="row">
+  <div class="col-md-12">
+      <nav aria-label="breadcrumb" >
           <ol class="breadcrumb mis-casos" [ngClass]="getClassByStatus()" style="color: white;">
             <li class="breadcrumb-item "><a routerLink="/abogado/listarcasos/waitingLawyer" class="text-casos">Mis Casos</a></li>
             <li class="breadcrumb-item active text-casos" aria-current="page"><strong>{{id}}</strong></li>
           </ol>
-        </nav>
-      </div>
-    </div>
-
-
-
-
-    <!-- <div class="row" *ngIf="request">
-      <div class="col-md-12"  >
-        <div class="accordion nuevo-acordeon" id="accordionExample"  >
-          <div class="card " style="border:none;">
-            <div class="card-header datos-usuario" id="headingOne" >
-              <h5 class="mb-0">
-                <button class="btn btn-link btn-modificado " type="button" data-toggle="collapse" data-target="#collapseChat" aria-expanded="true" aria-controls="collapseOne">
-                  INFORMACION DEL USUARIO
-                </button>
-              </h5>
-            </div>
-
-            <div id="collapseChat" class="collapse datos-perfil " aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body ">
-                Nombres: <strong style="font-size:20px;">{{request.name | titlecase }} </strong> <br>
-                Email: <strong style="font-size:20px;"> {{request.email}}</strong> <br>
-                Celular: <strong style="font-size:20px;"> {{request.celular}} </strong> <br>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div> -->
-
-    <div class="row">
-      <div class="col-md-12">
-        <ngb-accordion>
+      </nav>
+      <ngb-accordion>
           <ngb-panel>
             <ng-template ngbPanelTitle>
                 <h5 class="mb-0">
@@ -78,101 +36,58 @@
             </ng-template>
           </ngb-panel>
         </ngb-accordion>
-      </div>
-    </div>
+  </div>
+</div>
 
-<!--
-    <div class="row">
-      <div class="col-md-12">
-        <div class="accordion nuevo-acordeon" id="accordionExample3">
-          <div class="card" style="border:none;">
-            <div class="card-header datos-usuario" id="headingOne">
-              <h5 class="mb-0">
-                <button class="btn btn-link btn-modificado" type="button" data-toggle="collapse" data-target="#collapseChat3" aria-expanded="true" aria-controls="collapseOne">
-                  VER CHAT
-                </button>
-              </h5>
-            </div>
-
-            <div id="collapseChat3" class="collapse datos-perfil1" aria-labelledby="headingOne" data-parent="#accordionExample3">
-              <div class="card-body">
-                <ul class="list-group">
-                  <li class="list-group-item" *ngFor="let message of messages">{{message?.text}}</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </div> -->
-
-
-
-    <div class="row" *ngIf="request && request.status != 'assignedOpen' && request.status != 'finished' && request.status!='canceled'">
-      <div class="col-md-12" style="border-color: none;">
+<div class="row" *ngIf="request && request.status != 'assignedOpen' && request.status != 'finished' && request.status!='canceled'">
+    <div class="col-md-12" style="border-color: none;">
         <div class="accordion nuevo-acordeon" id="accordionExample2">
           <div class="card" style="border:none;">
             <div class="card-header datos-usuario1" id="headingOne">
-              <h5 class="mb-0">
-                <button routerLink="/abogado/casos/{{id}}/actividades" class="btn btn-link btn-modificado" type="button">
-                  ACTIVIDADES DEL CASO
-                </button>
-              </h5>
-            </div>
-
-            <div id="collapseChat2" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample2">
-              <div class="card-body">
-                <ul class="list-group">
-                  <li class="list-group-item" *ngFor="let message of messages">{{message.text}}</li>
-                </ul>
-              </div>
-            </div>
+               <h5 class="mb-0">
+                 <button routerLink="/abogado/casos/{{id}}/actividades" class="btn btn-link btn-modificado" type="button">
+                   ACTIVIDADES DEL CASO
+                 </button>
+               </h5>
+             </div>
           </div>
-
-        </div>
-      </div>
+       </div>
     </div>
-
-
-
-
-
-    <br><br><br>
-
-    <div class="row" *ngIf="request && request.status != 'assignedOpen'">
-        <div class="col-md-4"></div>
-        <div class="col-md-4 btn-status">
-            Status Actual:
-            <button class="btn" style="color: white;" [ngClass]="getClassByStatus()">
-            {{status[request.status]}}
-          </button>
-            <br>
-            <br>
-            <button class="btn btn-block"
-                    (click)="closeCase()" style="background-color: #f2a50c; color: white;" *ngIf="request.status != 'canceled' && request.status != 'finished'">Finalizar Caso</button>
-            <button class="btn btn-block" style="background-color: #f20c0c;
-            color: white;" *ngIf="request.status != 'canceled' && request.status != 'finished' " (click)="markNotProspected()">Marcar como no Prospectado</button>
-            <button class="btn btn-block"
-            *ngIf="request.status == 'finished' || request.status == 'canceled'" style="background-color:#3bc408; color: white;" (click)="reOpenCase()">Reabrir Caso</button>
-          </div>
-        <div class="col-md-4"></div>
-    </div>
-
-    <div class="row" *ngIf="request && request.status == 'assignedOpen'">
-      <div class="col-md-2">
-      </div>
-      <div class="col-md-2">
-          <button type="button" class="btn btn-success" (click)="reOpenCase()">Realizar Seguimiento</button>
-      </div>
-      <div class="col-md-2">
-        <button type="button" class="btn btn-danger" (click)="markNotProspected()">Cancelar Caso</button>
-      </div>
-      <div class="col-md-2">
-      </div>
-    </div>
-
-
-
   </div>
-  </div>
+
+  <br>
+
+
+<div class="row" *ngIf="request && request.status != 'assignedOpen'">
+    <div class="col-md-4"></div>
+    <div class="col-md-4 btn-status">
+        Status Actual:
+        <button class="btn" style="color: white;" [ngClass]="getClassByStatus()">
+        {{status[request.status]}}
+      </button>
+        <br>
+        <br>
+        <button class="btn btn-block"
+                (click)="closeCase()" style="background-color: #f2a50c; color: white;" *ngIf="request.status != 'canceled' && request.status != 'finished'">Finalizar Caso</button>
+        <button class="btn btn-block" style="background-color: #f20c0c;
+        color: white;" *ngIf="request.status != 'canceled' && request.status != 'finished' " (click)="markNotProspected()">Marcar como no Prospectado</button>
+        <button class="btn btn-block"
+        *ngIf="request.status == 'finished' || request.status == 'canceled'" style="background-color:#3bc408; color: white;" (click)="reOpenCase()">Reabrir Caso</button>
+      </div>
+    <div class="col-md-4"></div>
+</div>
+
+
+<div class="row" *ngIf="request && request.status == 'assignedOpen'">
+    <div class="col-md-2">
+    </div>
+    <div class="col-md-2">
+        <button type="button" class="btn btn-success" (click)="reOpenCase()">Realizar Seguimiento</button>
+    </div>
+    <div class="col-md-2">
+      <button type="button" class="btn btn-danger" (click)="markNotProspected()">Cancelar Caso</button>
+    </div>
+    <div class="col-md-2">
+    </div>
+</div>
+

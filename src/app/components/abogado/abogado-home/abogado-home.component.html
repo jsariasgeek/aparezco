@@ -4,6 +4,8 @@
 <br>
 <br>
 <div class="container">
+
+
   <div class="row">
     <div class="col-md-8">
         <h3 class="tittle-admin"> <strong>PANEL DE ADMINISTRACIÓN ABOGADOS</strong> </h3>
@@ -27,56 +29,51 @@
       </form>
     </div>
   </div>
-</div>
-
-
-
-
-<div class="container">
 
   <div class="row">
 
-    <div class="col-md-12">
-        <div></div>
-        <br>
-        <ul class="nav nav-pills mb-3" id="pills-tab">
-            <li class="nav-item" >
-              <a class="nav-link entrante" id="pills-home-tab"
-              data-toggle="pill" role="tab"
-               aria-selected="true" routerLink="listarcasos/waitingLawyer" routerLinkActive="active">Solicitudes Entrantes</a>
-            </li>
-            <li class="nav-item" >
-                <a class="nav-link abierta" id="pills-abiertos-tab"
-                data-toggle="pill"  role="tab"
-                aria-selected="false"  routerLink="listarcasos/assignedOpen" routerLinkActive="active">Casos Abiertos</a>
+      <div class="col-md-12">
+          <div></div>
+          <br>
+          <ul class="nav nav-pills mb-3" id="pills-tab">
+              <li class="nav-item" >
+                <a class="nav-link entrante" id="pills-home-tab"
+                data-toggle="pill" role="tab"
+                 aria-selected="true" routerLink="/abogado/listarcasos/waitingLawyer" routerLinkActive="active">Solicitudes Entrantes</a>
               </li>
-            <li class="nav-item">
-              <a class="nav-link proceso" id="pills-profile-tab"
-              data-toggle="pill"  role="tab"
-              aria-selected="false"  routerLink="listarcasos/assignedWorking" routerLinkActive="active">Casos en Proceso</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link finalizado" id="pills-contact-tab"
-              data-toggle="pill"  role="tab"
-              aria-selected="false"  routerLink="listarcasos/finished" routerLinkActive="active">Casos Finalizados</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link no-prospectados" id="pills-contact-tab"
+              <li class="nav-item" >
+                  <a class="nav-link abierta" id="pills-abiertos-tab"
+                  data-toggle="pill"  role="tab"
+                  aria-selected="false"  routerLink="/abogado/listarcasos/assignedOpen" routerLinkActive="active">Casos Abiertos</a>
+                </li>
+              <li class="nav-item">
+                <a class="nav-link proceso" id="pills-profile-tab"
                 data-toggle="pill"  role="tab"
-                aria-selected="false" routerLink="listarcasos/canceled" routerLinkActive="active">
-                Casos no Prospectados</a>
-             </li>
-          </ul>
-          <div id="pills-tabContent">
-              <router-outlet></router-outlet>
+                aria-selected="false"  routerLink="/abogado/listarcasos/assignedWorking" routerLinkActive="active">Casos en Proceso</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link finalizado" id="pills-contact-tab"
+                data-toggle="pill"  role="tab"
+                aria-selected="false"  routerLink="/abogado/listarcasos/finished" routerLinkActive="active">Casos Finalizados</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link no-prospectados" id="pills-contact-tab"
+                  data-toggle="pill"  role="tab"
+                  aria-selected="false" routerLink="/abogado/listarcasos/canceled" routerLinkActive="active">
+                  Casos no Prospectados</a>
+               </li>
+            </ul>
+            <div id="pills-tabContent">
+      </div>
     </div>
+
+
   </div>
 
+  <router-outlet></router-outlet>
 
 </div>
 
 
 
 
-
-</div>
