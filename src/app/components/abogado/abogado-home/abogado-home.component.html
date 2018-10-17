@@ -12,12 +12,16 @@
       <form>
         <div class="form-group" ngbDropdown #myDrop="ngbDropdown">
           <input type="text" class="form-control" placeholder="Buscar Caso"
-          (keyup)="myDrop.open()" id="dropdownManual" ngbDropdownAnchor
-          autocomplete="off">
-          <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;">
-              <button class="dropdown-item">Action - 1</button>
-              <button class="dropdown-item">Another Action</button>
-              <button class="dropdown-item">Something else is here</button>
+          [formControl]="searchField" id="dropdownManual" ngbDropdownAnchor
+          autocomplete="off" (keyup)="myDrop.open()">
+          <!-- <input type="text" class="form-control" placeholder="Buscar Caso"
+          (keyup)="myDrop.open();onkeyup($event);" id="dropdownManual" ngbDropdownAnchor
+          autocomplete="off"> -->
+          <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
+          class="dropdown-menu">
+          <a class="dropdown-item" *ngFor="let request of results$"
+          routerLink="/abogado/casos/{{request.id}}">{{ request.name }}</a>
+          <a class="dropdown-item" *ngIf="!results$ || results$.length<1">Sin Resultados</a>
             </div>
         </div>
       </form>

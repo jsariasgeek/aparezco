@@ -21,7 +21,7 @@
 
 
 
-    <div class="row" *ngIf="request">
+    <!-- <div class="row" *ngIf="request">
       <div class="col-md-12"  >
         <div class="accordion nuevo-acordeon" id="accordionExample"  >
           <div class="card " style="border:none;">
@@ -44,9 +44,44 @@
 
         </div>
       </div>
+    </div> -->
+
+    <div class="row">
+      <div class="col-md-12">
+        <ngb-accordion>
+          <ngb-panel>
+            <ng-template ngbPanelTitle>
+                <h5 class="mb-0">
+                    <button class="btn btn-link btn-modificado " type="button" data-toggle="collapse" data-target="#collapseChat" aria-expanded="true" aria-controls="collapseOne">
+                      INFORMACION DEL USUARIO
+                    </button>
+                  </h5>
+            </ng-template>
+            <ng-template ngbPanelContent>
+                Nombres: <strong style="font-size:20px;">{{request.name | titlecase }} </strong> <br>
+                Email: <strong style="font-size:20px;"> {{request.email}}</strong> <br>
+                Celular: <strong style="font-size:20px;"> {{request.celular}} </strong> <br>
+            </ng-template>
+          </ngb-panel>
+          <ngb-panel>
+            <ng-template ngbPanelTitle>
+                <h5 class="mb-0">
+                    <button class="btn btn-link btn-modificado" type="button" data-toggle="collapse" data-target="#collapseChat3" aria-expanded="true" aria-controls="collapseOne">
+                      VER CHAT
+                    </button>
+                  </h5>
+            </ng-template>
+            <ng-template ngbPanelContent>
+              <ul class="list-group">
+                  <li class="list-group-item" *ngFor="let message of messages">{{message?.text}}</li>
+                </ul>
+            </ng-template>
+          </ngb-panel>
+        </ngb-accordion>
+      </div>
     </div>
 
-
+<!--
     <div class="row">
       <div class="col-md-12">
         <div class="accordion nuevo-acordeon" id="accordionExample3">
@@ -70,7 +105,7 @@
 
         </div>
       </div>
-    </div>
+    </div> -->
 
 
 

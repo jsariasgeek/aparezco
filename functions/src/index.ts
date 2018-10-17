@@ -461,13 +461,40 @@ function createIndex(title){
 
 }
 
+function indexRequest(title){
+  const arr = title.toLowerCase().split('');
+  const searchableIndex = []
+  let prevKey = '';
+
+  for (const char of arr){
+    const key = prevKey + char;
+    searchableIndex.push(key)
+    prevKey = key
+  }
+  return searchableIndex
+
+}
+
 //Index Request Titles
+// exports.indexRequestOnCreate = functions.firestore
+// .document('requests/{requestId}')
+// .onCreate((snap, context) => {
+
+//   const request = snap.data();
+//   const requestId = snap.id;
+//   const searchableIndex = createIndex(request.name)
+//   const indexedRequest = { ...request, searchableIndex }
+//   const db = admin.firestore()
+//   return db.collection('requests').doc(requestId).set(indexedRequest, {merge:true})
+// })
+
 exports.indexRequestOnCreate = functions.firestore
 .document('requests/{requestId}')
-.onCreate(event => {
-  const requestId = event.id;
-  const request = event.data();
-  const searchableIndex = createIndex(request.name)
+.onCreate((snap, context) => {
+
+  const request = snap.data();
+  const requestId = snap.id;
+  const searchableIndex = indexRequest(request.name)
   const indexedRequest = { ...request, searchableIndex }
   const db = admin.firestore()
   return db.collection('requests').doc(requestId).set(indexedRequest, {merge:true})
@@ -475,12 +502,29 @@ exports.indexRequestOnCreate = functions.firestore
 
 exports.indexRequestOnUpdate = functions.firestore
 .document('requests/{requestId}')
-.onUpdate(event => {
-  const requestId = event.id;
-  const request = event.data();
-  const searchableIndex = createIndex(request.name)
-  const indexedRequest = {...request, searchableIndex }
-  const db = admin.firestore()
-  return db.collection('requests').doc(requestId).set(indexedRequest, {merge:true})
-})
+.onUpdate(
+  (change, context)=>{
+    const request = change.after.data();
+    const requestId = change.after.id;
+    const firestore = admin.firestore();
+
+    if(change.after.data().name !== change.before.data().name){
+      const searchableIndex = indexRequest(request.name)
+      const indexedRequest = { ...request, searchableIndex }
+      return firestore.collection('requests').doc(requestId).set(indexedRequest, {merge:false})
+    }
+    return null;
+  }
+)
+
+// exports.indexRequestOnUpdate = functions.firestore
+// .document('requests/{requestId}')
+// .onUpdate(event => {
+//   const requestId = event.id;
+//   const request = event.data();
+//   const searchableIndex = createIndex(request.name)
+//   const indexedRequest = {...request, searchableIndex }
+//   const db = admin.firestore()
+//   return db.collection('requests').doc(requestId).set(indexedRequest, {merge:true})
+// })
 
