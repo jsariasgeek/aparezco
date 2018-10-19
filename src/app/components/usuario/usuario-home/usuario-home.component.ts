@@ -18,6 +18,7 @@ export class UsuarioHomeComponent implements OnInit {
   misCasos:Solicitud[];
   user:UserProfile;
   newRequest:Solicitud;
+  selectedCiudad:string;
 
   constructor(private authService:AuthService, private reqService:RequestsService,
               private router:Router) {}
@@ -56,6 +57,7 @@ export class UsuarioHomeComponent implements OnInit {
   sendRequest(f:NgForm){
 
     const caso = f.controls.caso.value;
+    const ciudad = f.controls.ciudad.value;
 
     const message:Message = {
       id:Date.now(),
@@ -81,6 +83,7 @@ export class UsuarioHomeComponent implements OnInit {
       name:this.user.name,
       email:this.user.email,
       celular:this.user.celular,
+      ciudad:null,
       caso:caso,
       messages:[message],
       status:'waitingLawyer',

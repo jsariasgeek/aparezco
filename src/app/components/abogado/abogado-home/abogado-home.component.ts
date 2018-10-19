@@ -15,7 +15,7 @@ import { FormControl } from '@angular/forms';
 export class AbogadoHomeComponent implements OnInit {
 
   lawyer;
-  private searchField:FormControl;
+  searchField:FormControl;
   results:Observable<any[]>;
   offset = new Subject<string>();f
   results$;
@@ -58,7 +58,7 @@ export class AbogadoHomeComponent implements OnInit {
       (value) => {
         this.afs.collection('requests',
       ref => ref.where('userFirstAssigned.uid', '==', this.lawyer.id)
-      .where('searchableIndex','array-contains', value))
+      .where('searchableIndex','array-contains', value.toLowerCase()).orderBy('id','desc'))
       .valueChanges()
       .subscribe(
         (results)=> {

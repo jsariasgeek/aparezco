@@ -11,7 +11,8 @@
       <br>
       <br>
 
-      <form (ngSubmit)="sendRequest(f)" #f="ngForm" style="margin: 30px" class="form-n bg-formabogado">
+      <form (ngSubmit)="sendRequest(f)" #f="ngForm" class="form-n bg-formabogado"
+      autocomplete="nope">
 
         <img src="assets/images/logo.png" alt="logo Aparezcp" class="img-fluid logo"> <br><br>
 
@@ -20,44 +21,86 @@
         </p>
 
         <div class="form-group" >
-          <input type="text" class="form-control" placeholder="Ingresa tu Nombre Completo" required name="name" minlength="10" #name ngModel>
-          <small class="form-text text-muted" *ngIf="!name.valid && name.touched">  Ingresa tu Nombre Completo <i class="fa fa-user-circle"></i></small>
+          <input type="text" class="form-control" placeholder="Ingresa tu Nombre Completo"
+          required name="nombres" minlength="10" #nombres ngModel autocomplete="nope">
+          <small class="form-text text-muted" *ngIf="!nombres.valid && nombres.touched">
+            Ingresa tu Nombre Completo <i class="fa fa-user-circle"></i></small>
         </div>
         <div class="form-group" >
-          <input type="email" class="form-control" placeholder="Ingresa tu Email" name="email" required #email ngModel>
-          <small class="form-text text-muted" *ngIf="!email.valid && email.touched">Ingresa tu Email</small>
+          <input type="email" class="form-control" placeholder="Ingresa tu Email"
+          name="email" required #email ngModel autocomplete="nope">
+          <small class="form-text text-muted" *ngIf="!email.valid && email.touched">
+            Ingresa tu Email</small>
         </div>
         <div class="input-group-prepend form-group">
 
-          <input class="form-control" placeholder="Celular" required minlength="10"  name="celular" #celular ngModel>
-          <small class="form-text text-muted" *ngIf="!celular.valid && celular.touched">Ingresa un Número de Celular Válido</small>
+          <input class="form-control" placeholder="Celular" required minlength="10"
+          name="celular" #celular ngModel autocomplete="off">
+          <small class="form-text text-muted" *ngIf="!celular.valid && celular.touched">
+            Ingresa un Número de Celular Válido</small>
         </div>
-        <!-- <div class="input-group-prepend form-group">
-            <select class="form-control" id="exampleFormControlSelect1" placeholder="Selecciona tu Ciudad">
-                <option>Selecciona tu Ciudad</option>
-                <br>
+        <div class="form-group" ngbDropdown #myDrop="ngbDropdown">
+          <input type="text" class="form-control"
+          placeholder="Ciudad en la que deseas encontrar tu abogado"
+          [formControl]="searchCiudad" id="dropdownManual" ngbDropdownAnchor
+          autocomplete="nope" (keyup)="myDrop.open()" name="ciudad" #ciudad>
+          <!-- <input type="text" class="form-control" placeholder="Buscar Caso"
+          (keyup)="myDrop.open();onkeyup($event);" id="dropdownManual" ngbDropdownAnchor
+          autocomplete="off"> -->
+          <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
+          class="dropdown-menu">
+          <a class="dropdown-item" *ngFor="let city of results$" (click)="setCitySearched(city.nombre)">
+            {{ city.nombre }} | {{ city.departamento }}
+          </a>
+          <a class="dropdown-item" *ngIf="ciudad.value==''">Escribe el nombre de la Ciudad</a>
+          <a class="dropdown-item" *ngIf="(results$?.length<1) && ciudad.value != '' ">Sin Resultados</a>
+            </div>
+        </div>
+        <!-- <div class="form-group">
+            <select class="form-control" id="exampleFormControlSelect1"
+            #ciudad [(ngModel)]="selectedCiudad" name="ciudad">
+                <option value="nociudad">Ciudad donde deseas encontrar Tu Abogado</option>
                 <option>Pereira</option>
                 <option>Armenia</option>
                 <option>Manizales</option>
-                <option>Me encuentro en otra ciudad</option>
+                <option value="ciudadnohabilitada">Me encuentro en otra ciudad</option>
               </select>
-            <small class="form-text text-muted" *ngIf="!celular.valid && celular.touched">Ingresa un Número de Celular Válido</small>
           </div> -->
-        <br>
         <div class="form-group">
-          <textarea class="form-control" rows="3" placeholder="Descríbenos brevemente tu Problema" required minlength="20" name="caso" #caso ngModel></textarea>
-          <small *ngIf="caso.touched && caso.value.lenght<15">Ingresa una descripción para tu caso</small>
+          <textarea class="form-control" rows="3" placeholder="Descríbenos brevemente tu Problema"
+          required minlength="20" name="caso" #caso ngModel></textarea>
+          <small *ngIf="caso.touched && caso.value.lenght<15">
+            Ingresa una descripción para tu caso</small>
         </div>
-        <br>
+        <div class="alert alert-danger" role="alert"
+        *ngIf="!ciudadesConCobertura?.includes(searchCiudad.value) && ciudad.value != '' && !prospectoRegistrado">
+          <!-- <h4 class="alert-heading">Lo Sentimos!</h4> -->
+          <p>Aún no tenemos abogados disponibles en esta ciudad.
+            Podemos Contactarte una vez lo tengamos <br>
+          <small style="margin-bottom:20px;">
+            Completa el Formulario y has click en el botón
+          </small> <br>
+          <button type="button" class="btn btn-primary" style="border-radius: 20px;"
+          [disabled]="!f.valid" (click)="saveUser(f)">
+            Deseo Que me Contacten</button>
+          </p>
+        </div>
+        <div class="alert alert-success" role="alert" *ngIf="prospectoRegistrado">
+            <h4 class="alert-heading">Bien Hecho!</h4>
+            <p>Te contactaremos una vez tengamos presencia en tu ciudad</p>
+          </div>
         <div class="form-group form-check">
-          <input type="checkbox" class="form-check-input" id="exampleCheck1" #checkTerms (change)="checkboxActive($event)" >
-          <label class="form-check-label" for="exampleCheck1">Acepto los Términos y Condiciones</label>
+          <input type="checkbox" class="form-check-input" id="exampleCheck1"
+          #checkTerms (change)="checkboxActive($event)" >
+          <label class="form-check-label" for="exampleCheck1">
+            Acepto los Términos y Condiciones</label>
         </div>
-        <button type="submit" class="btn-new" [disabled]="(!f.valid) || (!checkTerms.checked)" style=" padding: 12px; border-radius: 15px"><strong>Contactar a mi abogado</strong></button>
-
-
-
-      </form>
+        <button type="submit" class="btn-new"
+        [disabled]="(!f.valid) || (!checkTerms.checked) || ciudad.value == 'ciudadnohabilitada'"
+        style=" padding: 12px; border-radius: 15px">
+        <strong>Contactar a mi abogado</strong>
+      </button>
+    </form>
       <br><br>
     </div>
   </div>

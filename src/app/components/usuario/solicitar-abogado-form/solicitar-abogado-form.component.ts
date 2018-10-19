@@ -1,5 +1,6 @@
+import { CitiesService } from './../../../services/cities.service';
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {NgForm, FormControl} from '@angular/forms';
 import {RequestsService} from '../../../services/requests.service';
 import {Router} from '@angular/router';
 import {MessagesService} from '../../../services/messages.service';
@@ -9,6 +10,8 @@ import swal from 'sweetalert2';
 import {Solicitud} from '../../../models/solicitud';
 import {AuthService} from '../../../services/auth.service';
 import {UserProfile} from '../../../models/user-profile';
+import { debounceTime, map } from 'rxjs/operators';
+import { City } from 'src/app/models/city';
 
 @Component({
   selector: 'app-solicitar-abogado-form',
@@ -20,13 +23,24 @@ export class SolicitarAbogadoFormComponent implements OnInit {
  request:Solicitud;
  message:Message;
  requestEndFirstChat:boolean = false;
+ prospectoRegistrado:boolean = false;
+ results$;
+
+
+ ciudadesConCobertura = ['Pereira', 'Armenia', 'Manizales'];
+
+ selectedCiudad = 'nociudad';
+ //Buscar Ciudad
+ searchCiudad:FormControl;
 
   statusQueue:StatusQueue;
  @ViewChild('f') requestForm:NgForm;
+ @ViewChild('ciudad') ciudadInput:HTMLInputElement
   constructor(private requestsService:RequestsService,
               private messagesService:MessagesService,
               private authService:AuthService,
-              private router:Router){
+              private router:Router,
+              private citiesSvc:CitiesService){
     // this.requestForm = new FormGroup({
     //   'name':new FormControl(this.request.name,[
     //     Validators.required,
@@ -101,20 +115,42 @@ export class SolicitarAbogadoFormComponent implements OnInit {
   }
 
   ngOnInit(){
+
+    //Get cities with Cobertura
+
+    //Init Form Control
+    this.searchCiudad = new FormControl();
+    this.searchCities();
+
+  }
+
+  searchCities(){
+    this.searchCiudad.valueChanges
+    .pipe(debounceTime(500)).subscribe(
+      (value) => {
+       this.citiesSvc.searchCitie(value)
+      .valueChanges()
+      .subscribe(
+        (results)=> {
+
+          this.results$ = results;
+        }
+      )
+      }
+    )
+  }
+
+  setCitySearched(cityName){
+    this.searchCiudad.setValue(cityName);
+    console.log(this.searchCiudad.value);
   }
 
   sendRequest(f){
-    console.log(f.value);
-
     this.message = {
       id:Date.now(),
       text:f.value.caso,
       user:f.value.email
     }
-0
-
-    console.log(this.message);
-
     this.statusQueue = {
       id:Date.now(),
       text:'waitingLawyer',
@@ -124,10 +160,11 @@ export class SolicitarAbogadoFormComponent implements OnInit {
 
     this.request = {
       id:Date.now(),
-      name:f.value.name,
+      name:f.value.nombres,
       email:f.value.email,
       celular:f.value.celular,
       caso:f.value.caso,
+      ciudad:this.searchCiudad.value,
       messages:[this.message,],
       endFirstChat:false,
       ratingSent:false,
@@ -147,6 +184,19 @@ export class SolicitarAbogadoFormComponent implements OnInit {
 
 checkboxActive(event){
   console.log(event);
+}
+
+saveUser(f:NgForm){
+  const user = {
+    nombres:f.value.nombres,
+    email:f.value.email,
+    celular:f.value.celular,
+    caso:f.value.caso,
+  }
+  console.log(user);
+  this.requestsService.saveProspecto(user).then(
+    ()=>{this.prospectoRegistrado = true}
+  )
 }
 
 

@@ -465,6 +465,16 @@ exports.indexRequestOnCreate = functions.firestore
     const db = admin.firestore();
     return db.collection('requests').doc(requestId).set(indexedRequest, { merge: true });
 });
+exports.indexCityonCreate = functions.firestore
+    .document('cities/{citiId}')
+    .onCreate((snap, context) => {
+    const ciudad = snap.data();
+    const ciudadId = snap.id;
+    const searchableIndex = indexRequest(ciudad.nombre);
+    const indexedRequest = Object.assign({}, ciudad, { searchableIndex });
+    const db = admin.firestore();
+    return db.collection('cities').doc(ciudadId).set(indexedRequest, { merge: true });
+});
 exports.indexRequestOnUpdate = functions.firestore
     .document('requests/{requestId}')
     .onUpdate((change, context) => {
@@ -475,6 +485,19 @@ exports.indexRequestOnUpdate = functions.firestore
         const searchableIndex = indexRequest(request.name);
         const indexedRequest = Object.assign({}, request, { searchableIndex });
         return firestore.collection('requests').doc(requestId).set(indexedRequest, { merge: false });
+    }
+    return null;
+});
+exports.indexCityOnUpdate = functions.firestore
+    .document('cities/{citiId}')
+    .onUpdate((change, context) => {
+    const request = change.after.data();
+    const requestId = change.after.id;
+    const firestore = admin.firestore();
+    if (change.after.data().nombres !== change.before.data().nombres) {
+        const searchableIndex = indexRequest(request.nombres);
+        const indexedRequest = Object.assign({}, request, { searchableIndex });
+        return firestore.collection('cities').doc(requestId).set(indexedRequest, { merge: false });
     }
     return null;
 });

@@ -104,6 +104,10 @@ export class RequestsService {
     ref.orderByChild('email').equalTo(email))
   }
 
+  public saveProspecto(prospecto){
+    return this.afs.collection('prospectos').add(prospecto);
+  }
+
 
 }
 
