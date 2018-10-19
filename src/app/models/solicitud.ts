@@ -9,7 +9,7 @@ export interface Solicitud {
     email: string;
     celular: number;
     caso: string;
-    ciudad: string;
+    ciudad: string;    
     messages:Message[];
     endFirstChat?:boolean;
     ratingSent?:boolean;

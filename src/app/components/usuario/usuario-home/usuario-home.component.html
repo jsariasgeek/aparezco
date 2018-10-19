@@ -18,18 +18,46 @@
         <div class="card">
           <div class="card-header" id="headingOne">
             <h5 class="mb-0">
-              <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+              <button class="btn btn-primary" type="button"
+              data-toggle="collapse" data-target="#collapseOne"
+              aria-expanded="true" aria-controls="collapseOne"
+              (click)="isCollapsed = !isCollapsed"
+              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
                 Crear nuevo Caso
               </button>
             </h5>
           </div>
 
-          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+          <div id="collapseExample" [ngbCollapse]="!isCollapsed" id="collapseOne"
+          class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
               <form (ngSubmit)="sendRequest(f)"  #f="ngForm">
                 <div class="form-group">
                   <textarea class="form-control" rows="3" placeholder="Descríbenos brevemente tu Problema" required minlength="20" name="caso" #caso ngModel></textarea>
                   <small *ngIf="!caso.valid && caso.touched">Ingresa una descripción para tu caso</small>
+                </div>
+                <div class="form-group" ngbDropdown #myDrop="ngbDropdown">
+                  <input type="text" class="form-control"
+                  placeholder="Ciudad en la que deseas encontrar tu abogado"
+                  [formControl]="searchCiudad" id="dropdownManual" ngbDropdownAnchor
+                  autocomplete="nope" (keyup)="myDrop.open()" name="ciudad" #ciudad>
+                  <!-- <input type="text" class="form-control" placeholder="Buscar Caso"
+                  (keyup)="myDrop.open();onkeyup($event);" id="dropdownManual" ngbDropdownAnchor
+                  autocomplete="off"> -->
+                  <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
+                  class="dropdown-menu">
+                  <a class="dropdown-item" *ngFor="let city of results$" (click)="setCitySearched(city.nombre)">
+                    {{ city.nombre }} | {{ city.departamento }}
+                  </a>
+                  <a class="dropdown-item" *ngIf="ciudad.value==''">Escribe el nombre de la Ciudad</a>
+                  <a class="dropdown-item" *ngIf="(results$?.length<1) && ciudad.value != '' ">Sin Resultados</a>
+                    </div>
+                </div>
+                <div class="alert alert-danger" role="alert"
+                *ngIf="!ciudadesConCobertura?.includes(searchCiudad.value) && ciudad.value != '' && !prospectoRegistrado">
+                  <!-- <h4 class="alert-heading">Lo Sentimos!</h4> -->
+                  <p>Aún no tenemos abogados disponibles en esta ciudad.
+                  </p>
                 </div>
                 <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Enviar Solicitud</button>
               </form>
@@ -47,19 +75,19 @@
       <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item">
           <a class="nav-link active"
-             style="color: #33cc00;" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">
+             style="color: #33cc00;" id="home-tab" data-toggle="tab" role="tab" aria-controls="home" aria-selected="true">
             EN PROCESO
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link"
-             style="color:#ff9900;" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">
+             style="color:#ff9900;" id="profile-tab" data-toggle="tab"  role="tab" aria-controls="profile" aria-selected="false">
             TERMINADO
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link"
-             style="color:#ff0000;" id="contact-tab" data-toggle="tab" href="#contact" role="tab" aria-controls="contact" aria-selected="false">
+             style="color:#ff0000;" id="contact-tab" data-toggle="tab"  role="tab" aria-controls="contact" aria-selected="false">
             CERRADO
           </a>
         </li>

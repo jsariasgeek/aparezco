@@ -1,4 +1,4 @@
-export class City {
+export interface City {
   nombre:string;
   departamento:string;
   cobertura:boolean;

@@ -50,7 +50,10 @@
           <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
           class="dropdown-menu">
           <a class="dropdown-item" *ngFor="let city of results$" (click)="setCitySearched(city.nombre)">
-            {{ city.nombre }} | {{ city.departamento }}
+            <tr>
+              <td>{{ city.nombre }}</td>
+              <td>{{ city.departamento }}</td>
+            </tr>
           </a>
           <a class="dropdown-item" *ngIf="ciudad.value==''">Escribe el nombre de la Ciudad</a>
           <a class="dropdown-item" *ngIf="(results$?.length<1) && ciudad.value != '' ">Sin Resultados</a>

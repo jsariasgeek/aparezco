@@ -1,12 +1,15 @@
+import { CitiesService } from './../../../services/cities.service';
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {RequestsService} from '../../../services/requests.service';
-import {NgForm} from '@angular/forms';
+import { NgForm, FormControl } from '@angular/forms';
 import {UserProfile} from '../../../models/user-profile';
 import {Message} from '../../../models/message';
 import {StatusQueue} from '../../../models/status-queue';
 import {Router} from '@angular/router';
 import {Solicitud} from '../../../models/solicitud';
+import { debounceTime } from 'rxjs/operators';
+import { City } from 'src/app/models/city';
 
 @Component({
   selector: 'app-usuario-home',
@@ -19,16 +22,23 @@ export class UsuarioHomeComponent implements OnInit {
   user:UserProfile;
   newRequest:Solicitud;
   selectedCiudad:string;
+  ciudadesConCobertura = [];
 
-  constructor(private authService:AuthService, private reqService:RequestsService,
-              private router:Router) {}
+  //Search Ciudad
+  searchCiudad:FormControl;
+  results$;
+
+  constructor(private authService:AuthService,
+              private reqService:RequestsService,
+              private router:Router,
+              private citiesSvc:CitiesService) {}
 
   ngOnInit() {
     this.authService.isLogged().subscribe(
       (response)=>{
         if(response && response.uid){
-          console.log('Tengo al Usuario');
-          console.log(response);
+          // console.log('Tengo al Usuario');
+          // console.log(response);
           this.reqService.getRequestsByEmail(response.email).valueChanges()
             .subscribe(
               (casos:Solicitud[])=>{
@@ -40,19 +50,54 @@ export class UsuarioHomeComponent implements OnInit {
             .subscribe(
               (userProfile:UserProfile)=>{
                 this.user = userProfile;
-                console.log('Tengo el User Profile');
-                console.log(this.user);
+                // console.log('Tengo el User Profile');
+                // console.log(this.user);
               }
             )
         }
       }
     )
 
-    if(!this.misCasos){
-      console.log('No hay Casos');
-    }
+    //Search Cities
+    this.citiesSvc.getCiudadesConCobertura()
+    .valueChanges()
+    .subscribe(
+      (cities)=>{
+       cities.forEach(
+         (city:City)=>{
+           this.ciudadesConCobertura.push(city.nombre)
+         }
+       )
+      }
+    );
+
+    this.searchCiudad = new FormControl();
+    this.searchCities();
 
   }
+
+  searchCities(){
+    this.searchCiudad.valueChanges
+    .pipe(debounceTime(500)).subscribe(
+      (value) => {
+       this.citiesSvc.searchCitie(value)
+      .valueChanges()
+      .subscribe(
+        (results)=> {
+
+          this.results$ = results;
+        }
+      )
+      }
+    )
+  }
+
+  setCitySearched(cityName){
+    this.searchCiudad.setValue(cityName);
+    console.log(this.searchCiudad.value);
+  }
+
+
 
   sendRequest(f:NgForm){
 
@@ -91,7 +136,7 @@ export class UsuarioHomeComponent implements OnInit {
 
     }
 
-    console.log(newRequest);
+    // console.log(newRequest);
 
     this.reqService.sendRequest(newRequest);
     this.router.navigate(['/abogado-chat', {request:newRequest.id}],)

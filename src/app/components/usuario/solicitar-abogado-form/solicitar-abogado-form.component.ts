@@ -24,14 +24,15 @@ export class SolicitarAbogadoFormComponent implements OnInit {
  message:Message;
  requestEndFirstChat:boolean = false;
  prospectoRegistrado:boolean = false;
- results$;
 
 
- ciudadesConCobertura = ['Pereira', 'Armenia', 'Manizales'];
+
+ ciudadesConCobertura = [];
 
  selectedCiudad = 'nociudad';
  //Buscar Ciudad
  searchCiudad:FormControl;
+ results$;
 
   statusQueue:StatusQueue;
  @ViewChild('f') requestForm:NgForm;
@@ -119,6 +120,18 @@ export class SolicitarAbogadoFormComponent implements OnInit {
     //Get cities with Cobertura
 
     //Init Form Control
+    this.citiesSvc.getCiudadesConCobertura()
+    .valueChanges()
+    .subscribe(
+      (cities)=>{
+       cities.forEach(
+         (city:City)=>{
+           this.ciudadesConCobertura.push(city.nombre)
+         }
+       )
+      }
+    )
+
     this.searchCiudad = new FormControl();
     this.searchCities();
 

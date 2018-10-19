@@ -12,6 +12,7 @@ import {UserProfile} from '../../../models/user-profile';
 export class UsuarioLoginComponent implements OnInit {
 
   invalidCredentials:boolean = false;
+  userNotFound = false;
 
   constructor(private authService:AuthService,
               private router:Router) { }
@@ -50,9 +51,13 @@ export class UsuarioLoginComponent implements OnInit {
     ).catch(
       (err)=>{
         console.log(err);
-        if(err.code=='auth/wrong-password' || err.code=="auth/user-not-found"){
+        if(err.code=='auth/wrong-password'){
           console.log('Invalid User or Password');
           this.invalidCredentials = true;
+
+        }
+        if(err.code=="auth/user-not-found"){
+          this.userNotFound = true;
 
         }
       }

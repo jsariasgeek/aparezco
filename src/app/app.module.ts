@@ -46,8 +46,10 @@ import {TruncatePipe} from './pipes/truncate.pipe';
 import {ResaltarStatusDirective} from "./directives/resaltar-status.directive";
 import {AngularFirestoreModule} from 'angularfire2/firestore';
 import { AbogadoListadoCasosComponent } from './components/abogado/abogado-home/abogado-listado-casos/abogado-listado-casos.component';
-import { NgbDropdownModule, NgbModule, NgbAccordionModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbModule, NgbAccordionModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { AbogadoRootComponent } from './components/abogado/abogado-root/abogado-root.component';
+import { CitiesService } from './services/cities.service';
+import { ModuleComponent } from './module/module.component';
 
 
 
@@ -114,6 +116,7 @@ const appRoutes:Routes = [
     ResaltarStatusDirective,
     AbogadoListadoCasosComponent,
     AbogadoRootComponent,
+    ModuleComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,9 +131,11 @@ const appRoutes:Routes = [
     StarRatingModule.forRoot(),
     NgbDropdownModule,
     NgbAccordionModule,
+    NgbCollapseModule,
       ],
   providers: [
     AuthService,
+    CitiesService,
     MyGuardService,
     LawerOrUserGuardService,
     LoginGuardService,
