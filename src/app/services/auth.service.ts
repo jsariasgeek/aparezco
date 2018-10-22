@@ -6,7 +6,7 @@ import {AngularFireDatabase} from 'angularfire2/database';
 import {UserProfile} from '../models/user-profile';
 
 // rxjs imports
-import {switchMap} from 'rxjs/operators';
+import {switchMap, first} from 'rxjs/operators';
 import {of, Observable} from 'rxjs';
 
 //AngularFire2 imports
@@ -214,6 +214,10 @@ export class AuthService {
 
   public userFacebookLogin(){
     return this.afAuth.auth.signInWithPopup(new auth.FacebookAuthProvider())
+  }
+
+  isLoggedIn(){
+    return this.afAuth.authState.pipe(first())
   }
 
 

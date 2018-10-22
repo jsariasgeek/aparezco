@@ -35,16 +35,16 @@ export class AbogadoDetalleCasoComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = params['id'];
-        console.log('Este es el id que me llegó');
-        console.log(this.id);
+        // console.log('Este es el id que me llegó');
+        // console.log(this.id);
         this.reqService.getRequest(this.id).valueChanges()
           .subscribe(
             (request: Solicitud) => {
               this.request = request;
               this.requestStatus = request.status;
               this.messages = request.messages;
-              console.log('Este es el request');
-              console.log(this.request);
+              // console.log('Este es el request');
+              // console.log(this.request);
             }
           );
       }

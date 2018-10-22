@@ -95,8 +95,8 @@ export class AbogadoListadoCasosComponent implements OnInit {
   getIncomingRequests(key?) {
     this.reqService.getIncomingRequests(this.offset, key).subscribe(
       (incomingRequests)=>{
-        console.log('incomingRequests', incomingRequests);
-        console.log(incomingRequests.length);
+        // console.log('incomingRequests', incomingRequests);
+        // console.log(incomingRequests.length);
         this.incomingRequests = incomingRequests;
         // this.incomingRequests = _.slice(incomingRequests, 0, this.offset)
         if(incomingRequests.length>=1){
@@ -150,30 +150,30 @@ export class AbogadoListadoCasosComponent implements OnInit {
 
   nextPage() {
     this.prevKeys.push(this.nextKey)
-    console.log(this.prevKeys);
+    // console.log(this.prevKeys);
     this.prevKey = this.nextKey
     this.getIncomingRequests(this.nextKey)
 
   }
   prevPage() {
     this.prevKey = this.prevKeys[this.prevKeys.length-2]
-    console.log(this.prevKey);
+    // console.log(this.prevKey);
     this.prevKeys = _.dropRight(this.prevKeys)
     this.getIncomingRequests(this.prevKey)
   }
 
   nextPageCases() {
     this.prevKeysCases.push(this.nextCase)
-    console.log(this.prevKeysCases);
+    // console.log(this.prevKeysCases);
     this.prevKeyCase = this.prevKeysCases[this.prevKeysCases.length-2]
-    console.log('Prev Case', this.prevKeyCase);
+    // console.log('Prev Case', this.prevKeyCase);
     this.filterCases(this.status, this.nextCase)
 
   }
 
   prevPageCases() {
     this.prevKeyCase = this.prevKeysCases[this.prevKeysCases.length-2]
-    console.log('Prev Case', this.prevKeyCase);
+    // console.log('Prev Case', this.prevKeyCase);
     this.prevKeysCases = _.dropRight(this.prevKeysCases)
     this.filterCases(this.status, this.prevKeyCase)
   }

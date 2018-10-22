@@ -1,4 +1,3 @@
-import { CitiesService } from './../../../services/cities.service';
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgForm, FormControl} from '@angular/forms';
 import {RequestsService} from '../../../services/requests.service';
@@ -12,6 +11,7 @@ import {AuthService} from '../../../services/auth.service';
 import {UserProfile} from '../../../models/user-profile';
 import { debounceTime, map } from 'rxjs/operators';
 import { City } from 'src/app/models/city';
+import { CitiesService } from 'src/app/modules/search-city/cities.service';
 
 @Component({
   selector: 'app-solicitar-abogado-form',

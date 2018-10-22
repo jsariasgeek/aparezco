@@ -3,4 +3,3 @@ export interface City {
   departamento:string;
   cobertura:boolean;
 }
-

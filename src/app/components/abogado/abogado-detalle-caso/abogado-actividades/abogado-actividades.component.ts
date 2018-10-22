@@ -22,6 +22,8 @@ export class AbogadoActividadesComponent implements OnInit {
 
   activities = [];
 
+  isCollapsed = false;
+
   constructor(private route: ActivatedRoute,
     private reqService: RequestsService,
     private actsService:ActivitiesService,
@@ -33,8 +35,8 @@ export class AbogadoActividadesComponent implements OnInit {
     this.route.params.subscribe(
       (params: Params) => {
         this.id = params['id'];
-        console.log('Este es el id que me llegó');
-        console.log(this.id);
+        // console.log('Este es el id que me llegó');
+        // console.log(this.id);
 
         //Get The request
         this.reqService.getRequest(this.id).valueChanges()
@@ -51,8 +53,8 @@ export class AbogadoActividadesComponent implements OnInit {
               //     }
               //   )
 
-              console.log('Este es el request');
-              console.log(this.request);
+              // console.log('Este es el request');
+              // console.log(this.request);
             }
           );
 
@@ -75,23 +77,24 @@ export class AbogadoActividadesComponent implements OnInit {
   }
 
   saveActivity(f:NgForm){
-    console.log('Vamos a guardar la actividad');
-    console.log(f.controls.titulo.value);
-    console.log(f.controls.caso.value);
+    // console.log('Vamos a guardar la actividad');
+    // console.log(f.controls.titulo.value);
+    // console.log(f.controls.caso.value);
 
     const activity:Activity  = {
       id:Date.now(),
       title:f.controls.titulo.value,
       content:f.controls.caso.value
     }
-    console.log(activity);
+    // console.log(activity);
     this.actsService.saveActivity(this.id, activity)
     f.reset()
+    this.isCollapsed = false;
 
   }
 
   deleteActivity(activityId){
-    console.log('Voy a borrar la actividad');
+    // console.log('Voy a borrar la actividad');
     this.actsService.deleteActivity(this.request.id, activityId);
   }
 

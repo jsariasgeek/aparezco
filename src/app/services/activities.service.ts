@@ -24,7 +24,8 @@ export class ActivitiesService {
     // console.log(requestId);
     // return this.afDB.list('/activities', ref =>
     // ref.orderByChild('requestId').equalTo(requestId.toString()));
-    return this.afs.collection('requests').doc(requestId.toString()).collection('activities')
+    return this.afs.collection('requests').doc(requestId.toString()).collection('activities'
+    , ref => ref.orderBy('id','desc'))
     .valueChanges()
   }
 
@@ -46,6 +47,11 @@ export class ActivitiesService {
   deleteActivity(requestId, activityId){
     return this.afs.collection('requests').doc(requestId.toString()).collection('activities').doc(activityId.toString()).delete()
   }
+
+  // saveComentario(requestId, activityId, comentario){
+  //   return this.afs.collection('requests').doc(requestId)
+  //   .collection('activities').doc(activity.id).update({})
+  // }
 
 
 

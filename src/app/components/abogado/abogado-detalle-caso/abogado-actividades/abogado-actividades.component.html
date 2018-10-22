@@ -1,49 +1,34 @@
 <div class="bg">
-
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
   <div class="container">
+
 
     <div class="row" *ngIf="request">
       <div class="col-md-12">
         <nav aria-label="breadcrumb ">
           <ol class="breadcrumb mis-casos">
             <li class="breadcrumb-item"><a routerLink="/abogado/" class="text-casos">Mis Casos</a></li>
-            <li class="breadcrumb-item"><a routerLink="/abogado/casos/{{request.id}}" class="text-casos">{{request.id}}</a></li>
+            <li class="breadcrumb-item"><a routerLink="/abogado/casos/{{request.id}}" class="text-casos">{{request.id}} - {{ request.name | titlecase }}</a></li>
             <li class="breadcrumb-item active text-casos" aria-current="page"><strong>Actividades</strong></li>
           </ol>
         </nav>
       </div>
     </div>
 
-
-    <!-- <div class="row">
-      <div class="col-md-12">
-        <h3>{{request.categoryByLawyer || 'Sin Categoría'}}</h3>
-      </div>
-    </div> -->
-
     <div class="row" >
         <div class="col-md-12" >
-          <ngb-accordion #acc="ngbAccordion"  class="accordion" id="buttonCrearActivity" >
-            <ngb-panel class="card" style="border: none;">
-              <ng-template ngbPanelTitle class="card-header" id="headingCrear"
-              style="background:transparent; border: none; text-align: center;">
+          <div class="accordion" id="buttonCrearActivity" >
+            <div class="card" style="border: none;">
+              <div class="card-header" id="headingCrear" style="background:transparent; border: none;">
                 <h5 class="mb-0">
-                  <button class="btn btn-primary btn-crear-actividad" type="button"
-                  data-toggle="collapse"
-                  data-target="#formCrearAct" aria-expanded="true" aria-controls="collapseOne">
+                  <button class="btn btn-primary btn-crear-actividad" type="button"  (click)="isCollapsed = !isCollapsed"
+                  [attr.aria-expanded]="!isCollapsed" aria-controls="formCrearAct">
                     Crear Actividad
                   </button>
                 </h5>
-              </ng-template>
+              </div>
 
-              <ng-template  ngbPanelContent id="formCrearAct" class="collapse background-cardc" aria-labelledby="headingCrear"
-                   data-parent="#buttonCrearActivity">
+              <div id="formCrearAct" class="collapse background-cardc"
+              [ngbCollapse]="!isCollapsed">
                 <div class="card-body">
                   <form (ngSubmit)="saveActivity(f)"  #f="ngForm">
                     <div class="form-group ">
@@ -56,46 +41,36 @@
                     <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Enviar</button>
                   </form>
                 </div>
-              </ng-template>
-            </ngb-panel>
-          </ngb-accordion>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
-
-
-
-    <br>
-
-    <!-- <div class="row">
-      <div class="col-md-12">
-        <ngb-accordion
-        class="accordion background-card" id="accordionExample"
-        #acc="ngbAccordion" style="width:100%;">
-          <ngb-panel class="card-x"
-          *ngFor="let activity of activities; let i = index;" style="width:100%;">
-            <ng-template ngbPanelTitle class="card-header background-cardb"  id="heading{{i}}" style="width: 100%;">
+      <div class="accordion background-card" id="accordionExample" >
+          <div class="card-x " *ngFor="let activity of activities; let i = index;">
+            <div class="card-header background-cardb"  id="heading{{i}}">
               <h5 class="mb-0">
                   <a class="list-group-item list-group-item-action flex-column align-items-start"
                      style="border-radius: 10px; border: none; background-color:#fcf0f0;"
                      data-toggle="collapse" attr.data-target="#collapse{{i}}"
                      aria-expanded="true" attr.aria-controls="collapse{{i}}"
-                     style="width: 100%;">
+                     routerLink="{{activity.id}}">
                     <div class="d-flex w-100 justify-content-between">
-                      <h5 class="mb-1" style="font-weight: bold">{{activity.title | titlecase }}</h5>
-                      <small>3 days ago</small>
+                      <h5 class="mb-1" style="font-weight: bold">
+                        {{activity.title | titlecase }}</h5>
+                      <!--<small>3 days ago</small>-->
                     </div>
                     <p class="mb-1">
                       {{activity.content | truncate:60}}
                     </p>
                     <small>{{activity.id | date}}</small>
-                    <small>Donec id elit non mi porta.</small>
+                    <!--<small>Donec id elit non mi porta.</small>-->
                   </a>
               </h5>
-            </ng-template>
-           <ng-template ngbPanelContent>
+            </div>
             <div id="collapse{{i}}" class="collapse" attr.aria-labelledby="heading{{i}}"
-                  data-parent="#accordionExample">
+            data-parent="#accordionExample">
               <div class="card-body background-cardc">
                 <form (ngSubmit)="updateActivity(f)"  #f="ngForm">
                   <div class="form-group">
@@ -111,115 +86,12 @@
                   <button type="button" class="btn btn-danger" (click)="deleteActivity(activity.id)">Eliminar</button>
                 </form>
               </div>
-            </div>
-           </ng-template>
-          </ngb-panel>
-        </ngb-accordion>
-      </div>
-    </div> -->
-
-
-    <div class="row">
-      <div class="col-md-12">
-        <ngb-accordion #acc="ngbAccordion"
-        *ngFor="let activity of activities; let i = index;"
-        class="card-x ">
-          <ngb-panel>
-            <ng-template ngbPanelTitle>
-              <h5 style="text-align: left;">{{activity.title | titlecase }}</h5>
-              <p>{{ activity.content }}</p>
-            </ng-template>
-            <ng-template ngbPanelContent>
-                <form (ngSubmit)="updateActivity(f)"  #f="ngForm">
-                    <div class="form-group">
-                      <input type="text" class="form-control text-casosb"
-                             placeholder="Titulo de la Actividad" #titulo required name="titulo" [(ngModel)]="activity.title">
-                    </div>
-                    <div class="form-group">
-                      <textarea class="form-control text-casosb" rows="3" placeholder="Detalle de la Actividad"
-                                required minlength="20" name="caso" #caso [(ngModel)]="activity.content"></textarea>
-                      <small *ngIf="!caso.valid && caso.touched">Ingresa una descripción para tu caso</small>
-                    </div>
-                    <button type="button" class="btn btn-primary" [disabled]="!f.valid" (click)="updateActivity(activity)">Enviar</button> &nbsp;
-                    <button type="button" class="btn btn-danger" (click)="deleteActivity(activity.id)">Eliminar</button>
-                  </form>
-            </ng-template>
-          </ngb-panel>
-        </ngb-accordion>
-      </div>
-    </div>
-
-
-
-
-
-    <!-- <div class="accordion background-card" id="accordionExample" >
-      <div class="card-x " *ngFor="let activity of activities; let i = index;">
-        <div class="card-header background-cardb"  id="heading{{i}}">
-          <h5 class="mb-0">
-              <a class="list-group-item list-group-item-action flex-column align-items-start"
-                 style="border-radius: 10px; border: none; background-color:#fcf0f0;"
-                 data-toggle="collapse" attr.data-target="#collapse{{i}}"
-                 aria-expanded="true" attr.aria-controls="collapse{{i}}">
-                <div class="d-flex w-100 justify-content-between">
-                  <h5 class="mb-1" style="font-weight: bold">{{activity.title | titlecase }}</h5>
-                </div>
-                <p class="mb-1">
-                  {{activity.content | truncate:60}}
-                </p>
-                <small>{{activity.id | date}}</small>
-              </a>
-          </h5>
-        </div>
-
-        <div id="collapse{{i}}" class="collapse" attr.aria-labelledby="heading{{i}}"
-             data-parent="#accordionExample">
-          <div class="card-body background-cardc">
-            <form (ngSubmit)="updateActivity(f)"  #f="ngForm">
-              <div class="form-group">
-                <input type="text" class="form-control text-casosb"
-                       placeholder="Titulo de la Actividad" #titulo required name="titulo" [(ngModel)]="activity.title">
-              </div>
-              <div class="form-group">
-                <textarea class="form-control text-casosb" rows="3" placeholder="Detalle de la Actividad"
-                          required minlength="20" name="caso" #caso [(ngModel)]="activity.content"></textarea>
-                <small *ngIf="!caso.valid && caso.touched">Ingresa una descripción para tu caso</small>
-              </div>
-              <button type="button" class="btn btn-primary" [disabled]="!f.valid" (click)="updateActivity(activity)">Enviar</button> &nbsp;
-              <button type="button" class="btn btn-danger" (click)="deleteActivity(activity.id)">Eliminar</button>
-            </form>
+       </div>
           </div>
         </div>
-      </div>
-    </div> -->
-
 
     <br>
 
 
-
-    <!--<div class="row">
-      <div class="col-md-12">
-        <div class="list-group">
-          <a class="list-group-item list-group-item-action flex-column align-items-start"
-             style="border-radius: 10px" *ngFor="let activity of activities">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1" style="font-weight: bold">{{activity.title | titlecase }}</h5>
-              &lt;!&ndash;<small>3 days ago</small>&ndash;&gt;
-            </div>
-            <p class="mb-1">
-              {{activity.content}}
-            </p>
-            <small>{{activity.id | date}}</small>
-            &lt;!&ndash;<small>Donec id elit non mi porta.</small>&ndash;&gt;
-            <br>
-          </a>
-          <br>
-        </div>
-      </div>
-    </div>-->
-
   </div>
-
-
 </div>

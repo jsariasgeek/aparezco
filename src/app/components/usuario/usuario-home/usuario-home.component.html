@@ -22,7 +22,7 @@
               data-toggle="collapse" data-target="#collapseOne"
               aria-expanded="true" aria-controls="collapseOne"
               (click)="isCollapsed = !isCollapsed"
-              [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+              [attr.aria-expanded]="isCollapsed" aria-controls="collapseExample">
                 Crear nuevo Caso
               </button>
             </h5>
@@ -31,35 +31,24 @@
           <div id="collapseExample" [ngbCollapse]="!isCollapsed" id="collapseOne"
           class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
             <div class="card-body">
-              <form (ngSubmit)="sendRequest(f)"  #f="ngForm">
+              <form (ngSubmit)="sendRequest(f)"  #f="ngForm" autocomplete="nope">
                 <div class="form-group">
-                  <textarea class="form-control" rows="3" placeholder="Descríbenos brevemente tu Problema" required minlength="20" name="caso" #caso ngModel></textarea>
-                  <small *ngIf="!caso.valid && caso.touched">Ingresa una descripción para tu caso</small>
+                  <textarea class="form-control" rows="3"
+                  placeholder="Descríbenos brevemente tu Problema"
+                  required minlength="20" name="caso" #caso ngModel></textarea>
+                  <small *ngIf="!caso.valid && caso.touched">
+                    Ingresa una descripción para tu caso
+                  </small>
                 </div>
-                <div class="form-group" ngbDropdown #myDrop="ngbDropdown">
-                  <input type="text" class="form-control"
-                  placeholder="Ciudad en la que deseas encontrar tu abogado"
-                  [formControl]="searchCiudad" id="dropdownManual" ngbDropdownAnchor
-                  autocomplete="nope" (keyup)="myDrop.open()" name="ciudad" #ciudad>
-                  <!-- <input type="text" class="form-control" placeholder="Buscar Caso"
-                  (keyup)="myDrop.open();onkeyup($event);" id="dropdownManual" ngbDropdownAnchor
-                  autocomplete="off"> -->
-                  <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
-                  class="dropdown-menu">
-                  <a class="dropdown-item" *ngFor="let city of results$" (click)="setCitySearched(city.nombre)">
-                    {{ city.nombre }} | {{ city.departamento }}
-                  </a>
-                  <a class="dropdown-item" *ngIf="ciudad.value==''">Escribe el nombre de la Ciudad</a>
-                  <a class="dropdown-item" *ngIf="(results$?.length<1) && ciudad.value != '' ">Sin Resultados</a>
-                    </div>
-                </div>
-                <div class="alert alert-danger" role="alert"
-                *ngIf="!ciudadesConCobertura?.includes(searchCiudad.value) && ciudad.value != '' && !prospectoRegistrado">
+                <app-search-city (ciudadSelected)="updateCity($event)"></app-search-city>
+                <div class="alert alert-info" role="alert"
+                *ngIf="!ciudadesConCobertura?.includes(searchCiudad?.value) &&  ciudad?.value != ''">
                   <!-- <h4 class="alert-heading">Lo Sentimos!</h4> -->
-                  <p>Aún no tenemos abogados disponibles en esta ciudad.
+                  <p>Tenemos abogados disponibles en &nbsp;<span
+                    *ngFor="let ciudad of ciudadesConCobertura">{{ciudad}},&nbsp;</span>
                   </p>
                 </div>
-                <button type="submit" class="btn btn-primary" [disabled]="!f.valid">Enviar Solicitud</button>
+                <button type="submit" class="btn btn-primary" [disabled]="!f.valid || !ciudadesConCobertura?.includes(searchCiudad?.value)">Enviar Solicitud</button>
               </form>
             </div>
           </div>

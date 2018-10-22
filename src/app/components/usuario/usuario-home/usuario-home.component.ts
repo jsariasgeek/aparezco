@@ -1,5 +1,6 @@
-import { CitiesService } from './../../../services/cities.service';
-import { Component, OnInit } from '@angular/core';
+import { SearchCityComponent } from './../../../modules/search-city/search-city/search-city.component';
+
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {RequestsService} from '../../../services/requests.service';
 import { NgForm, FormControl } from '@angular/forms';
@@ -26,12 +27,14 @@ export class UsuarioHomeComponent implements OnInit {
 
   //Search Ciudad
   searchCiudad:FormControl;
-  results$;
+  isCollapsed = false;
+  ciudad:string;
+
+  @ViewChild(SearchCityComponent) child;
 
   constructor(private authService:AuthService,
               private reqService:RequestsService,
-              private router:Router,
-              private citiesSvc:CitiesService) {}
+              private router:Router) {}
 
   ngOnInit() {
     this.authService.isLogged().subscribe(
@@ -59,42 +62,21 @@ export class UsuarioHomeComponent implements OnInit {
     )
 
     //Search Cities
-    this.citiesSvc.getCiudadesConCobertura()
-    .valueChanges()
-    .subscribe(
-      (cities)=>{
-       cities.forEach(
-         (city:City)=>{
-           this.ciudadesConCobertura.push(city.nombre)
-         }
-       )
-      }
-    );
+
 
     this.searchCiudad = new FormControl();
-    this.searchCities();
 
   }
 
-  searchCities(){
-    this.searchCiudad.valueChanges
-    .pipe(debounceTime(500)).subscribe(
-      (value) => {
-       this.citiesSvc.searchCitie(value)
-      .valueChanges()
-      .subscribe(
-        (results)=> {
+   ngAfterViewInit(){
+     this.ciudadesConCobertura = this.child.ciudadesConCobertura;
+     this.searchCiudad = this.child.searchCiudad;
+   }
 
-          this.results$ = results;
-        }
-      )
-      }
-    )
-  }
+   updateCity($event){
+     console.log('Value', $event);
+    this.ciudad = $event;
 
-  setCitySearched(cityName){
-    this.searchCiudad.setValue(cityName);
-    console.log(this.searchCiudad.value);
   }
 
 
@@ -102,7 +84,7 @@ export class UsuarioHomeComponent implements OnInit {
   sendRequest(f:NgForm){
 
     const caso = f.controls.caso.value;
-    const ciudad = f.controls.ciudad.value;
+    const ciudad = this.ciudad;
 
     const message:Message = {
       id:Date.now(),
@@ -116,19 +98,12 @@ export class UsuarioHomeComponent implements OnInit {
       user:this.user.email
     }
 
-
-
-    // const newRequest = new Solicitud(
-    //   Date.now(),this.user.name, this.user.email, this.user.celular, caso, [message],
-    //   false, false,'open', '', [statusQueue],
-    //   '')
-
     const newRequest:Solicitud  = {
       id:Date.now(),
       name:this.user.name,
       email:this.user.email,
       celular:this.user.celular,
-      ciudad:null,
+      ciudad:ciudad,
       caso:caso,
       messages:[message],
       status:'waitingLawyer',
@@ -136,7 +111,7 @@ export class UsuarioHomeComponent implements OnInit {
 
     }
 
-    // console.log(newRequest);
+    console.log(newRequest);
 
     this.reqService.sendRequest(newRequest);
     this.router.navigate(['/abogado-chat', {request:newRequest.id}],)

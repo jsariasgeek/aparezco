@@ -37,15 +37,15 @@
         <span class="accordion " id="accordionExample" style="margin-bottom: 10px;">
           <span id="headingOne" >
             <button
-            class="btn btn-lg btn-block"  (click)="isCollapsed = !isCollapsed"
+            class="btn btn-lg btn-block" (click)="isCollapsed = !isCollapsed"
             [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample"
             style="background-color:#97c32e; color: white; border-radius: 15px;"
             type="button" data-toggle="collapse"
             data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             Iniciar Sesión Con mi Email</button>
           </span>
-        <span id="collapseOne"  id="collapseExample" [ngbCollapse]="!isCollapsed"
-        class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <span id="collapseExample" [ngbCollapse]="!isCollapsed"
+        class="collapse">
           <br>
            <form #f="ngForm" (ngSubmit)="login(f)" class="background-usuario">
           <div class="form-group">

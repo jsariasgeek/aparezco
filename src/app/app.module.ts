@@ -48,8 +48,8 @@ import {AngularFirestoreModule} from 'angularfire2/firestore';
 import { AbogadoListadoCasosComponent } from './components/abogado/abogado-home/abogado-listado-casos/abogado-listado-casos.component';
 import { NgbDropdownModule, NgbModule, NgbAccordionModule, NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { AbogadoRootComponent } from './components/abogado/abogado-root/abogado-root.component';
-import { CitiesService } from './services/cities.service';
-import { ModuleComponent } from './module/module.component';
+import { SearchCityModule } from './modules/search-city/search-city.module';
+import { DetalleActividadComponent } from './components/abogado/abogado-detalle-caso/abogado-actividades/detalle-actividad/detalle-actividad.component';
 
 
 
@@ -66,6 +66,7 @@ const appRoutes:Routes = [
     {path:'listarcasos/:status', component:AbogadoListadoCasosComponent, canActivate:[MyGuardService]},
     {path:'casos/:id', component:AbogadoDetalleCasoComponent, canActivate:[MyGuardService]},
     {path:'casos/:id/actividades', component:AbogadoActividadesComponent, canActivate:[MyGuardService]},
+    {path:'casos/:id/actividades/:activityId', component:DetalleActividadComponent, canActivate:[MyGuardService]},
   ]
 },
   {path:'abogado/casos/:id', component:AbogadoDetalleCasoComponent, canActivate:[MyGuardService]},
@@ -116,7 +117,7 @@ const appRoutes:Routes = [
     ResaltarStatusDirective,
     AbogadoListadoCasosComponent,
     AbogadoRootComponent,
-    ModuleComponent,
+    DetalleActividadComponent,
   ],
   imports: [
     BrowserModule,
@@ -129,13 +130,14 @@ const appRoutes:Routes = [
     AngularFirestoreModule,
     AngularFireAuthModule,
     StarRatingModule.forRoot(),
-    NgbDropdownModule,
-    NgbAccordionModule,
-    NgbCollapseModule,
+    NgbDropdownModule.forRoot(),
+    NgbAccordionModule.forRoot(),
+    NgbCollapseModule.forRoot(),
+    SearchCityModule,
+
       ],
   providers: [
     AuthService,
-    CitiesService,
     MyGuardService,
     LawerOrUserGuardService,
     LoginGuardService,

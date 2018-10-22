@@ -16,8 +16,8 @@
 
         <img src="assets/images/logo.png" alt="logo Aparezcp" class="img-fluid logo"> <br><br>
 
-        <h2 class="text-center"> <strong>La Solución a tu problema inicia ahora</strong> </h2>
-      <p class="text-center">¡Haz las consultas legales que necesites sin pagar! <br>
+        <h2 class="text-center"> <strong>Bienvenido a Aparezco</strong> </h2>
+      <p class="text-center">¡Haz tu pregunta, te contestaremos inmediatamente! <br>
         </p>
 
         <div class="form-group" >
@@ -40,25 +40,26 @@
             Ingresa un Número de Celular Válido</small>
         </div>
         <div class="form-group" ngbDropdown #myDrop="ngbDropdown">
-          <input type="text" class="form-control"
-          placeholder="Ciudad en la que deseas encontrar tu abogado"
-          [formControl]="searchCiudad" id="dropdownManual" ngbDropdownAnchor
-          autocomplete="nope" (keyup)="myDrop.open()" name="ciudad" #ciudad>
-          <!-- <input type="text" class="form-control" placeholder="Buscar Caso"
-          (keyup)="myDrop.open();onkeyup($event);" id="dropdownManual" ngbDropdownAnchor
-          autocomplete="off"> -->
-          <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
-          class="dropdown-menu">
-          <a class="dropdown-item" *ngFor="let city of results$" (click)="setCitySearched(city.nombre)">
-            <tr>
-              <td>{{ city.nombre }}</td>
-              <td>{{ city.departamento }}</td>
-            </tr>
-          </a>
-          <a class="dropdown-item" *ngIf="ciudad.value==''">Escribe el nombre de la Ciudad</a>
-          <a class="dropdown-item" *ngIf="(results$?.length<1) && ciudad.value != '' ">Sin Resultados</a>
-            </div>
-        </div>
+            <input type="text" class="form-control"
+            placeholder="Ciudad en la que deseas encontrar tu abogado"
+            [formControl]="searchCiudad" id="dropdownManual" ngbDropdownAnchor
+            autocomplete="nope" (keyup)="myDrop.open()" name="ciudad" #ciudad>
+            <!-- <input type="text" class="form-control" placeholder="Buscar Caso"
+            (keyup)="myDrop.open();onkeyup($event);" id="dropdownManual" ngbDropdownAnchor
+            autocomplete="off"> -->
+            <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
+            class="dropdown-menu">
+            <a class="dropdown-item" *ngFor="let city of results$" (click)="setCitySearched(city.nombre)">
+              <tr>
+                <td>{{ city.nombre }} | </td>
+                <td>&nbsp;{{ city.departamento }}</td>
+              </tr>
+            </a>
+            <a class="dropdown-item" *ngIf="ciudad.value==''">Escribe el nombre de la Ciudad</a>
+            <a class="dropdown-item" *ngIf="(results$?.length<1) && ciudad.value != '' ">Sin Resultados</a>
+              </div>
+          </div>
+        <!-- <app-search-city (ciudadSelected)="updateCity($event)"></app-search-city> -->
         <!-- <div class="form-group">
             <select class="form-control" id="exampleFormControlSelect1"
             #ciudad [(ngModel)]="selectedCiudad" name="ciudad">
@@ -76,7 +77,7 @@
             Ingresa una descripción para tu caso</small>
         </div>
         <div class="alert alert-danger" role="alert"
-        *ngIf="!ciudadesConCobertura?.includes(searchCiudad.value) && ciudad.value != '' && !prospectoRegistrado">
+        *ngIf="!ciudadesConCobertura?.includes(searchCiudad?.value) && ciudad?.value != '' && !prospectoRegistrado">
           <!-- <h4 class="alert-heading">Lo Sentimos!</h4> -->
           <p>Aún no tenemos abogados disponibles en esta ciudad.
             Podemos Contactarte una vez lo tengamos <br>

@@ -108,6 +108,11 @@ export class RequestsService {
     return this.afs.collection('prospectos').add(prospecto);
   }
 
+  getActivity(requestId, activityId){
+    return this.afs.collection('requests').doc(requestId).collection('activities')
+    .doc(activityId).valueChanges()
+  }
+
 
 }
 

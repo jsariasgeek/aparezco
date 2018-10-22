@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {UserProfile} from '../../../models/user-profile';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-usuario-login',
@@ -11,32 +12,35 @@ import {UserProfile} from '../../../models/user-profile';
 })
 export class UsuarioLoginComponent implements OnInit {
 
+  returnUrl:string;
+
   invalidCredentials:boolean = false;
   userNotFound = false;
+  isCollapsed = false;
 
   constructor(private authService:AuthService,
-              private router:Router) { }
+              private router:Router,
+              private route:ActivatedRoute) {}
 
   ngOnInit() {
-    this.authService.isLogged().subscribe(
-      (response)=>{
-        if(response && response.uid){
-          // console.log('El usuario ya se ha logueado previamente');
-          // this.router.navigate(['usuario/home']);
-          this.authService.getUserProfile(response.uid).valueChanges()
-            .subscribe(
-              (userProfile:UserProfile)=>{
-                if(userProfile){
-                  if(userProfile.isLawyer){
-                    this.router.navigate(['/abogado-login']);
-                  }else{
-                    this.router.navigate(['/usuario/home']);
-                  }
-                }
+
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '';
+
+    this.authService.isLoggedIn().pipe(
+      tap(user => {
+        if(user){
+          this.authService.getUserProfile(user.uid).valueChanges()
+          .subscribe(
+          (userProfile)=>{
+              if(userProfile.isLawyer){
+                this.router.navigate(['/abogado/login']);
+              }else{
+                this.router.navigate(['/usuario/home']);
               }
-            )
+          }
+          )
         }
-      }
+      })
     )
   }
 
@@ -45,7 +49,6 @@ export class UsuarioLoginComponent implements OnInit {
     const password = f.controls.password.value;
     this.authService.loginWithEmailAndPassword(email, password).then(
       ()=>{
-        console.log('Nos logueamos correctamente');
         this.router.navigate(['/usuario/home']);
       }
     ).catch(
