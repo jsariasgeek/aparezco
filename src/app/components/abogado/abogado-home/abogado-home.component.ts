@@ -58,7 +58,7 @@ export class AbogadoHomeComponent implements OnInit {
       (value) => {
         this.afs.collection('requests',
       ref => ref.where('userFirstAssigned.uid', '==', this.lawyer.id)
-      .where('searchableIndex','array-contains', value.toLowerCase()).orderBy('id','desc'))
+      .where('searchableIndex','array-contains', value.toLowerCase()).orderBy('id','desc').limit(10))
       .valueChanges()
       .subscribe(
         (results)=> {

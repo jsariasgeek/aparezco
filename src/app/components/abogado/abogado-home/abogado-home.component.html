@@ -21,8 +21,25 @@
           autocomplete="off"> -->
           <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
           class="dropdown-menu">
-          <a class="dropdown-item" *ngFor="let request of results$"
-          routerLink="/abogado/casos/{{request.id}}">{{ request.name | titlecase }} | <div class="square"></div></a>
+          <!-- <a class="dropdown-item" *ngFor="let request of results$"
+          routerLink="/abogado/casos/{{request.id}}">
+          <table style="width: 100%;">
+             <tbody>
+                <tr>
+                    <td style="border: 1px solid black;">{{ request.name | titlecase }} | </td>
+                    <td><span style="color: yellow; background: yellow;" class="status-indicator">iiiiiiiii</span></td>
+                  </tr>
+             </tbody>
+          </table>
+          </a> -->
+          <table style="width: 100%;">
+              <tbody>
+                 <tr *ngFor="let request of results$">
+                     <td><a routerLink="/abogado/casos/{{request.id}}" class="dropdown-item">{{ request.name | titlecase }}</a></td>
+                     <td><span class="status-indicator" [resaltarStatus]="request.status">iiiiiiiii</span></td>
+                   </tr>
+              </tbody>
+           </table>
           <a class="dropdown-item" *ngIf="!results$ || results$.length<1">Sin Resultados</a>
             </div>
         </div>
