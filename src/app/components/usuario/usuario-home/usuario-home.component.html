@@ -42,7 +42,7 @@
                 </div>
                 <app-search-city (ciudadSelected)="updateCity($event)"></app-search-city>
                 <div class="alert alert-info" role="alert"
-                *ngIf="!ciudadesConCobertura?.includes(searchCiudad?.value) &&  ciudad?.value != ''">
+                *ngIf="!ciudadesConCobertura?.includes(searchCiudad?.value) &&  searchCiudad?.value != ''">
                   <!-- <h4 class="alert-heading">Lo Sentimos!</h4> -->
                   <p>Tenemos abogados disponibles en &nbsp;<span
                     *ngFor="let ciudad of ciudadesConCobertura">{{ciudad}},&nbsp;</span>

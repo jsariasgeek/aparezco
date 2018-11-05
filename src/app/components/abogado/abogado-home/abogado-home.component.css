@@ -177,3 +177,10 @@ input[type=number]::-webkit-outer-spin-button {
   border-radius: 20px;
   color: white;
 }
+
+
+.square {
+  height: 5px;
+  width: 5px;
+  background-color:black;
+}

@@ -22,7 +22,7 @@
           <div  aria-labelledby="dropdownManual" ngbDropdownMenu style="width: 100%;"
           class="dropdown-menu">
           <a class="dropdown-item" *ngFor="let request of results$"
-          routerLink="/abogado/casos/{{request.id}}">{{ request.name | titlecase }}</a>
+          routerLink="/abogado/casos/{{request.id}}">{{ request.name | titlecase }} | <div class="square"></div></a>
           <a class="dropdown-item" *ngIf="!results$ || results$.length<1">Sin Resultados</a>
             </div>
         </div>

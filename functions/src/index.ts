@@ -475,6 +475,21 @@ function indexRequest(title){
 
 }
 
+function indexKeyWords(name, caso){
+  const arrName = name.toLowerCase().split(' ');
+  const arrCaso = caso.toLowerCase().split(' ');
+  const arrToIndex = arrName.concat(arrCaso)
+  const keywords = []
+  for(const word of arrToIndex){
+    if(word.length>4){
+      keywords.push(word)
+    }
+  }
+  return keywords
+}
+
+
+
 //Index Request Titles
 // exports.indexRequestOnCreate = functions.firestore
 // .document('requests/{requestId}')
@@ -494,7 +509,9 @@ exports.indexRequestOnCreate = functions.firestore
 
   const request = snap.data();
   const requestId = snap.id;
-  const searchableIndex = indexRequest(request.name)
+  const searchableName = indexRequest(request.name)
+  const keywords = indexKeyWords(request.name, request.caso)
+  const searchableIndex = searchableName.concat(keywords)
   const indexedRequest = { ...request, searchableIndex }
   const db = admin.firestore()
   return db.collection('requests').doc(requestId).set(indexedRequest, {merge:true})
@@ -521,7 +538,9 @@ exports.indexRequestOnUpdate = functions.firestore
     const firestore = admin.firestore();
 
     if(change.after.data().name !== change.before.data().name){
-      const searchableIndex = indexRequest(request.name)
+      const searchableName = indexRequest(request.name)
+      const keywords = indexKeyWords(request.name, request.caso)
+      const searchableIndex = searchableName.concat(keywords)
       const indexedRequest = { ...request, searchableIndex }
       return firestore.collection('requests').doc(requestId).set(indexedRequest, {merge:false})
     }
