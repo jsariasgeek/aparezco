@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { LOCALE_ID, NgModule } from '@angular/core';
 
@@ -5,7 +6,7 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { HomeComponent } from './components/general/home/home.component';
-import {CanActivate, RouterModule, Routes} from '@angular/router';
+import {CanActivate, RouterModule, Routes, PreloadAllModules} from '@angular/router';
 import { SolicitarAbogadoFormComponent } from './components/usuario/solicitar-abogado-form/solicitar-abogado-form.component';
 import { AbogadoChatComponent } from './components/usuario/abogado-chat/abogado-chat.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
@@ -69,6 +70,7 @@ const appRoutes:Routes = [
     {path:'casos/:id/actividades/:activityId', component:DetalleActividadComponent, canActivate:[MyGuardService]},
   ]
 },
+  {path:'abogado/calendario', loadChildren:'./components/abogado/calendar/calendar.module#CalendarioModule', canActivate:[MyGuardService]},
   {path:'abogado/casos/:id', component:AbogadoDetalleCasoComponent, canActivate:[MyGuardService]},
   {path:'abogado/casos/:id/actividades', component:AbogadoActividadesComponent, canActivate:[MyGuardService]},
   {path:'abogado/chat', component:AbogadoBackendChatComponent, canDeactivate:[DeactivateChatService]},
@@ -121,10 +123,11 @@ const appRoutes:Routes = [
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
-    RouterModule.forRoot(appRoutes),
+    RouterModule.forRoot(appRoutes, {preloadingStrategy:PreloadAllModules}),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     AngularFirestoreModule,

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Observable, fromEvent } from 'rxjs';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import {AuthService} from '../../../services/auth.service';
 import {UserProfile} from '../../../models/user-profile';
 
@@ -7,13 +9,15 @@ import {UserProfile} from '../../../models/user-profile';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
   loggedIn = false;
   name = null;
   thumbnail = null;
   isStaff = false;
-  isLawyer = false
+  isLawyer = false;
+
+  @ViewChild('lawyerDropdown') lawyerDropdown:ElementRef;
 
   constructor(private authService:AuthService){
     this.authService.isLogged().subscribe((result)=>{
@@ -47,6 +51,6 @@ export class NavbarComponent implements OnInit {
     this.authService.logout(isLawyer);
   }
 
-  ngOnInit(){}
+
 
 }

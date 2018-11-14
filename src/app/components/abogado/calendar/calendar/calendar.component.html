@@ -1,0 +1,123 @@
+<br>
+<br>
+<br>
+<br>
+<br>
+<div class="container">
+
+  <div class="row">
+    <div class="col-md-8">
+        <h3 class="tittle-admin"> <strong>Mi Calendario</strong> </h3>
+    </div>
+    <div class="col-md-4">
+    </div>
+  </div>
+
+  <br>
+
+
+  <mwl-demo-utils-calendar-header
+    [(view)]="view"
+    [(viewDate)]="viewDate">
+  </mwl-demo-utils-calendar-header>
+
+  <!-- <div class="alert alert-info">
+    Click on a day on the view.
+    <strong *ngIf="clickedDate">You clicked on this day: {{ clickedDate | date:'medium' }}</strong>
+  </div> -->
+
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      (dayClicked)="clickedDate = $event.day.date; dayClicked($event)">
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view
+      *ngSwitchCase="'week'"
+      [viewDate]="viewDate"
+      [events]="events"
+      (dayHeaderClicked)="clickedDate = $event.day.date">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view
+      *ngSwitchCase="'day'"
+      [viewDate]="viewDate"
+      [events]="events">
+    </mwl-calendar-day-view>
+  </div>
+
+
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Crear Evento</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <form #f="ngForm">
+          <div class="form-group">
+              <input type="text" class="form-control"
+              id="exampleInputEmail1" aria-describedby="emailHelp"
+              placeholder="Ingresa el Titulo del Evento" required #titulo [(ngModel)]="tituloEvento" name="titulo">
+            </div>
+        <div class="form-group">
+          <label for="dateStart">Inicio</label>
+          <div class="input-group">
+            <input id="dateStart" class="form-control" placeholder="yyyy-mm-dd" name="dp" ngbDatepicker #dp="ngbDatepicker"
+            [(ngModel)]="startDate" (click)="dp.toggle()">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="dp.toggle()" type="button">
+                <i class="fas fa-calendar"></i>
+              </button>
+            </div>
+            <input class="form-control"
+            (click)="buttonStartTime.click()" [formControl]="startTime" #inputStartTime>
+          <div class="input-group-append" ngbDropdown #myDropStart="ngbDropdown">
+            <button class="btn btn-outline-secondary calendar" type="button"
+            id="dropdownManual" (click)="myDropStart.toggle();myDrop.close();" ngbDropdownAnchor>
+              <i class="fas fa-clock" #buttonStartTime></i>
+            </button>
+              <div ngbDropdownMenu aria-labelledby="dropdownManual"
+              class="dropdown-menu dropdown-menu-right" style="max-height: 200px;overflow-y:scroll;">
+                <button class="dropdown-item" *ngFor="let time of times"
+                (click)="setTime('startTime', time.name); myDropStart.toggle();myDrop.close();">{{time.name}}</button>
+              </div>
+          </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="dateEnd">Finaliza</label>
+          <div class="input-group">
+            <input id="dateEnd" class="form-control" placeholder="yyyy-mm-dd" name="dpEnd" ngbDatepicker #dpEnd="ngbDatepicker"
+            [(ngModel)]="endDate"  (click)="dpEnd.toggle()">
+            <div class="input-group-append">
+              <button class="btn btn-outline-secondary calendar" (click)="dpEnd.toggle()" type="button">
+                <i class="fas fa-calendar"></i>
+              </button>
+            </div>
+              <input class="form-control"
+              (click)="buttonEndTime.click()" [formControl]="endTime" #inputEndTime>
+            <div class="input-group-append" ngbDropdown #myDrop="ngbDropdown">
+              <button class="btn btn-outline-secondary calendar" type="button"
+              id="dropdownManual" (click)="myDrop.toggle();myDropStart.close();" ngbDropdownAnchor>
+                <i class="fas fa-clock" #buttonEndTime></i>
+              </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownManual"
+                class="dropdown-menu dropdown-menu-right" style="max-height: 200px;overflow-y:scroll;">
+                  <button class="dropdown-item" *ngFor="let time of times"
+                  (click)="setTime('endTime', time.name);myDrop.toggle();">{{time.name}}</button>
+                </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button"
+      class="btn btn-outline-dark"
+      (click)="saveEvent();modal.dismiss()" [disabled]="f.invalid">Guardar</button>
+    </div>
+  </ng-template>
+
+</div>

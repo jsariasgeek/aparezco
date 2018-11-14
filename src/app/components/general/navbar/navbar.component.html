@@ -36,15 +36,19 @@
         <a class="nav-link" routerLink="abogado-login"> <i class="fa fa-user-circle"></i> Soy Abogado</a>
       </li>
 
-      <li class="nav-item dropdown" *ngIf="loggedIn && isLawyer" style="color: white;" ngbDropdown>
+      <li class="nav-item dropdown" *ngIf="loggedIn && isLawyer" style="color: white;" ngbDropdown
+      #lawyerDropdown="ngbDropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdown1" role="button"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ngbDropdownToggle style="color:white;">
            Bienvenido  <strong> {{name}} </strong> <img src="{{photoURL}}" class="img-fluid" style="border-radius: 80%; max-width: 15%; height: auto; max-height: 40px;">
         </a>
         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown1"
         ngbDropdownMenu style="width: 100%;">
-          <a class="dropdown-item" routerLink="/abogado/perfil"> <i class="fa fa-user"></i> Mi Perfil</a>
-          <a class="dropdown-item" routerLink="/abogado/listarcasos/waitingLawyer"> <i class="fa fa-list"></i> Ir a mis Casos</a>
+          <a class="dropdown-item" (click)="lawyerDropdown.close()"  routerLink="/abogado/perfil"> <i class="fa fa-user"></i> Mi Perfil</a>
+          <a class="dropdown-item"
+          (click)="lawyerDropdown.close()" routerLink="/abogado/listarcasos/waitingLawyer"> <i class="fa fa-list"></i> Ir a mis Casos</a>
+          <a class="dropdown-item" routerLink="/abogado/calendario"
+          (click)="lawyerDropdown.close()"> <i class="fa fa-calendar"></i> Mi Calendario </a>
           <!--<a class="dropdown-item" href="#">Another action</a>-->
           <div class="dropdown-divider" *ngIf="isStaff"></div>
           <a class="dropdown-item" routerLink="/admin" *ngIf="isStaff"> <i class="fa fa-check-square"></i> Ir al Administrador</a>
