@@ -21,7 +21,7 @@ import {
   CalendarView
 } from 'angular-calendar';
 import { FormControl, NgForm } from '@angular/forms';
-import { switchMap, map, mapTo } from 'rxjs/operators';
+import { switchMap, map, mapTo, toArray } from 'rxjs/operators';
 
 
 
@@ -53,6 +53,8 @@ export class CalendarComponent implements OnInit {
   tituloEvento:string;
   view: string = 'month';
   closeResult: string;
+
+  eventInAction;
 
   startDate:NgbDate = new NgbDate(
     new Date().getFullYear(),
@@ -201,6 +203,8 @@ amOrPm = this.hours >= 12 ? 'pm':'am';
   clickedDate: Date;
   lawyerUid;
 
+  activeDayIsOpen: boolean = false;
+
   constructor(private modalService: NgbModal,
               config:NgbDropdownConfig,
               private cSvc:CalendarService,
@@ -217,6 +221,20 @@ amOrPm = this.hours >= 12 ? 'pm':'am';
 
   }
 
+  editEvent = ({ event }: { event: CalendarEvent }): void => {
+    console.log('Edit event', event);
+    this.open(this.content);
+  }
+
+   deleteEvent = ({ event }: { event: CalendarEvent }): void => {
+    this.events = this.events.filter(iEvent => iEvent !== event);
+     this.cSvc.deleteEvent(event.id).then(
+       ()=>{
+        console.log('Event deleted');
+       }
+     )
+  }
+
   ngOnInit(){
     this.startTime = new FormControl(this.hours.toString().padStart(2, '0')+':'+'00'+ this.amOrPm);
     this.endTime = new FormControl(this.hours.toString().padStart(2, '0')+':'+'00'+ this.amOrPm);
@@ -229,10 +247,44 @@ amOrPm = this.hours >= 12 ? 'pm':'am';
           this.lawyerUid = user.uid;
           this.cSvc.getEvents(user.uid)
           // .pipe(
-          //   map(event:CalendarEvent => {start:new Date(event.start)})
+          //   map(
+          //     (event:CalendarEvent) => ({
+          //       start:event.start,
+          //       end:event.end,
+          //       title:event.title
+          //     })
+          //   ),
+          //   toArray()
+          // )
+          // .pipe(
+          //   map(
+          //     (event:CalendarEvent)=>{return {
+          //       start:event.start,
+          //       end:event.end,
+          //       title:event.title
+          //     }}
+          // ),
+          // toArray()
           // )
           .subscribe(
             (events:CalendarEvent[]) => {
+              // console.log('Events');
+              // console.log(events);
+              events.forEach(
+                (event)=>{
+                  event.actions = [
+                    {
+                      label: '<i class="fas fa-edit"></i>&nbsp;',
+                      onClick:this.editEvent,
+                    },
+                    {
+                      label: '<i class="fas fa-trash"></i>',
+                      onClick: this.deleteEvent,
+                    }
+                  ]
+                }
+              )
+              console.log('Events');
               console.log(events);
               this.events = events
             }
@@ -249,21 +301,43 @@ amOrPm = this.hours >= 12 ? 'pm':'am';
 
   }
 
+
   // async getUid(){
   //   this.lawyerUid = await this.authSvc.getUid();
   // }
 
   dayClicked($event){
+    this.eventInAction = $event
     console.log('Clicked');
     console.log($event);
     const date = $event.day.date;
+    this.viewDate = date;
     this.startDate = this.endDate = new NgbDate(
       date.getFullYear(),
       date.getMonth()+1,
       date.getDate()
     )
-
+    this.checkIfThereIsEventsForTheSameDay($event)
     this.open(this.content);
+  }
+
+  // checkIfThereIsEventsForTheSameDay($event){
+
+  //   this.activeDayIsOpen = $event.day.events.length !== 0
+
+  // }
+
+  checkIfThereIsEventsForTheSameDay($event){
+    if (isSameMonth($event.day.date, this.viewDate)) {
+      if (
+        (isSameDay(this.viewDate, $event.day.date) && this.activeDayIsOpen === true) ||
+        $event.day.events.length === 0
+      ) {
+        this.activeDayIsOpen = false;
+      } else {
+        this.activeDayIsOpen = true;
+      }
+    }
   }
 
   open(content) {
@@ -332,6 +406,7 @@ amOrPm = this.hours >= 12 ? 'pm':'am';
     // }
 
     const event = {
+      id:Date.now(),
       uid:this.lawyerUid,
       title:this.tituloEvento,
        start: new Date(
@@ -347,7 +422,12 @@ amOrPm = this.hours >= 12 ? 'pm':'am';
         this.endDate.day,
         convertedHours(endHours, endAmOrPm),
         this.endTime.value.split(':')[1].split('').slice(0,2).join(''),
-      ).getTime()
+      ).getTime(),
+      resizable: {
+        beforeStart: true,
+        afterEnd: true
+      },
+      draggable: true
     }
 
     console.log(event);

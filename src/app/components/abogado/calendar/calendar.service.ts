@@ -9,11 +9,15 @@ export class CalendarService {
   }
 
   saveEvent(event){
-    return this.afs.collection('events').add(event)
+    return this.afs.collection('events').doc(event.id.toString()).set(event)
   }
 
   getEvents(uid){
     return this.afs.collection('events', ref => ref.where('uid', '==', uid)).valueChanges()
+  }
+
+  deleteEvent(id){
+    return this.afs.collection('events').doc(id.toString()).delete()
   }
 
 
